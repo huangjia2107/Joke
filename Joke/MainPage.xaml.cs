@@ -37,9 +37,7 @@ namespace Joke
             this.InitializeComponent();
 
             MainVM.OnPopupToast += MainVM_OnPopupToast;
-            rootGrid.DataContext = MainVM;
-
-            Algorithm.HideStatusBar();
+            rootGrid.DataContext = MainVM;      
         }
 
         private void MainVM_OnPopupToast(bool IsDisconnected, string Msg)

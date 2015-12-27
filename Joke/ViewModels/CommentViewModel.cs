@@ -18,6 +18,13 @@ namespace Joke.ViewModels
     {
         #region Property
 
+        private bool _IsDisConnected;
+        public bool IsDisConnected
+        {
+            get { return _IsDisConnected; }
+            set { _IsDisConnected = value; RaisePropertyChanged("IsDisConnected"); }
+        }
+
         private bool _IsBusy;
         public bool IsBusy
         {
@@ -132,12 +139,28 @@ namespace Joke.ViewModels
                });
 
             _CommentCollection.OnLoadFinished += _CommentCollection_OnLoadFinished;
+            _CommentCollection.OnNetworkStatusChanged += _JokeInfoCollection_OnNetworkStatusChanged;
+        }
+
+        private void _JokeInfoCollection_OnNetworkStatusChanged(bool IsDisconnected)
+        {
+            this.IsDisConnected = IsDisconnected;
+
+            if (OnPopupToast != null)
+                OnPopupToast(IsDisconnected, "当前网络异常！");
         }
 
         private void _CommentCollection_OnLoadFinished(int responseTotalCount, int realTotalCount)
         {
             ///Finish.
         }
+
+        #endregion
+
+        #region Event
+
+        public delegate void PopupToast(bool IsDisconnected, string Msg);
+        public event PopupToast OnPopupToast;
 
         #endregion
     }

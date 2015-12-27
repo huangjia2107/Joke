@@ -17,6 +17,17 @@
 
         <utils:StringFormatConverter x:Key="SFConverter" StringFormat="#{0}"/>
         <utils:BoolToVisibilityConverter x:Key="BTVConverter"/>
+
+        <Storyboard x:Name="MsgVisibleStoryboard" FillBehavior="Stop" Duration="0:0:3" Completed="MsgVisibleStoryboard_Completed">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MsgToast">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="MsgToast"/>
+        </Storyboard>
     </Page.Resources>
 
     <Grid Background="{ThemeResource AppBackgroundThemeBrush}">
@@ -131,6 +142,13 @@
                 <ProgressRing IsActive="{x:Bind CommentVM.IsBusy,Mode=OneWay}" Width="45" Height="45"/>
             </Border>
         </Grid>
+
+        <Border Grid.RowSpan="3" Height="40" Visibility="Collapsed" VerticalAlignment="Top" x:Name="MsgToast" Background="{ThemeResource MsgToastBackgroundThemeBrush}">
+            <Border.RenderTransform>
+                <CompositeTransform TranslateX="-120" x:Name="quitTransform"/>
+            </Border.RenderTransform>
+            <TextBlock x:Name="tipText" Text="再按一次退出程序" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+        </Border>
     </Grid>
 </Page>
 
