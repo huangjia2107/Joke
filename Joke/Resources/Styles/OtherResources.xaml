@@ -1,0 +1,11 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Joke.Resources.Styles"
+    xmlns:data="using:Joke.Data"
+    xmlns:utils="using:Joke.Utils">
+
+    <data:AppSetting  x:Key="appSettings" />
+    <utils:BoolToThemeConverter x:Key="BTTConverter"/>
+    
+</ResourceDictionary>
