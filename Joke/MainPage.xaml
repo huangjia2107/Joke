@@ -15,18 +15,6 @@
     <Page.Resources>
         <utils:BoolToVisibilityConverter x:Key="BTVConverter"/>
         <utils:MenuItemToObjectConverter x:Key="MTOConverter"/>
-
-        <Storyboard x:Name="MsgVisibleStoryboard" FillBehavior="Stop" Duration="0:0:3" Completed="MsgVisibleStoryboard_Completed">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MsgToast">
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
-                    <DiscreteObjectKeyFrame.Value>
-                        <Visibility>Visible</Visibility>
-                    </DiscreteObjectKeyFrame.Value>
-                </DiscreteObjectKeyFrame>
-            </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="MsgToast"/>
-        </Storyboard>
-    
     </Page.Resources>
 
     <Grid x:Name="rootGrid" Background="{ThemeResource AppBackgroundThemeBrush}" >
@@ -40,10 +28,7 @@
                         <Setter Target="MainSplitView.DisplayMode" Value="CompactInline"/>
                         <Setter Target="MainSplitView.IsPaneOpen" Value="True"/>
                         <Setter Target="PhoneMenuBtn.Visibility" Value="Collapsed"/>
-                        <Setter Target="TopOperationBtn.Visibility" Value="Visible"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
-                        <Setter Target="TitleTextBlock.(RelativePanel.AlignLeftWithPanel)" Value="true"/>
-                        <Setter Target="TitleTextBlock.Margin" Value="12,0,0,0"/>
+
                     </VisualState.Setters>
                 </VisualState>
 
@@ -55,10 +40,7 @@
                         <Setter Target="MainSplitView.DisplayMode" Value="CompactInline"/>
                         <Setter Target="MainSplitView.IsPaneOpen" Value="false"/>
                         <Setter Target="PhoneMenuBtn.Visibility" Value="Collapsed"/>
-                        <Setter Target="TopOperationBtn.Visibility" Value="Visible"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
-                        <Setter Target="TitleTextBlock.(RelativePanel.AlignLeftWithPanel)" Value="true"/>
-                        <Setter Target="TitleTextBlock.Margin" Value="12,0,0,0"/>
+
                     </VisualState.Setters>
                 </VisualState>
 
@@ -70,10 +52,7 @@
                         <Setter Target="MainSplitView.DisplayMode" Value="Overlay"/>
                         <Setter Target="MainSplitView.IsPaneOpen" Value="false"/>
                         <Setter Target="PhoneMenuBtn.Visibility" Value="Visible"/>
-                        <Setter Target="TopOperationBtn.Visibility" Value="Collapsed"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
-                        <Setter Target="TitleTextBlock.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="true"/>
-                        <Setter Target="TitleTextBlock.Margin" Value="0"/>
+
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -94,13 +73,15 @@
                             FontSize="24" 
                             HorizontalAlignment="Left"
                             ToolTipService.ToolTip="Menu"
-                            Click="MenuBtn_Click"/>
+                            Command="{x:Bind MainVM.MenuBtnCommand}"
+                            CommandParameter="{Binding ElementName=MainSplitView}"
+                            />
                     <ListView x:Name="MenuListView"  
-                              Grid.Row="1"
+                              Grid.Row="1"          
                               SelectionMode="Single" 
                               ItemsSource="{x:Bind MainVM.MenuItemCollection,Mode=OneWay}"
-						      SelectedItem="{x:Bind MainVM.SelectedMenuItem, Mode=TwoWay,Converter={StaticResource MTOConverter}}" 
                               IsItemClickEnabled="False"
+                              SelectedItem="{x:Bind MainVM.SelectedMenuItem, Mode=OneWay,Converter={StaticResource MTOConverter}}" 
                               SelectionChanged="MenuListView_SelectionChanged">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:MenuItem">
@@ -116,8 +97,7 @@
                         <Button x:Name="MineBtn" 
                                 Height="48"         
                                 HorizontalContentAlignment="Stretch" 
-                                Padding="0"
-                            >
+                                Padding="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48"/>
@@ -151,8 +131,7 @@
                                       Height="48" 
                                       Padding="0"
                                       HorizontalContentAlignment="Stretch"
-                                      Click="ThemeBtn_Click"
-                            >
+                                      Click="ThemeBtn_Click">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48"/>
@@ -168,87 +147,23 @@
             </SplitView.Pane>
             <SplitView.Content>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <RelativePanel Background="{x:Bind BottomCommandBar.Background,Mode=OneWay}">
-                        <Button x:Name="PhoneMenuBtn"
-                                Visibility="Collapsed"
-                                RelativePanel.AlignLeftWithPanel="True"
-                                Height="48" 
-                                Width="48"  
-                                FontFamily="Segoe MDL2 Assets" 
-                                Content="&#xE700;" 
-                                FontSize="24"
-                                Click="MenuBtn_Click"/>
-                        <TextBlock x:Name="TitleTextBlock" 
-                                   FontSize="18" 
-                                   Margin="0" 
-                                   Text="{x:Bind MenuListView.SelectedValue.(models:MenuItem.Title)}" 
-                                   RelativePanel.AlignVerticalCenterWithPanel="True"
-                                   RelativePanel.AlignHorizontalCenterWithPanel="True"
-                                   />
-                        <StackPanel x:Name="TopOperationBtn" Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
-                            <Button x:Name="RefreshBtn" 
-                                    Height="48" 
-                                    Width="60"  
-                                    FontFamily="Segoe MDL2 Assets" 
-                                    Content="&#xE149;" 
-                                    FontSize="20"  
-                                    ToolTipService.ToolTip="刷新"
-                                    Command="{x:Bind MainVM.RefreshCommand}"/>
-                            <Button x:Name="GoTopBtn" 
-                                    Height="48" 
-                                    Width="60"  
-                                    FontFamily="Segoe MDL2 Assets" 
-                                    Content="&#xE11C;" 
-                                    FontSize="20"   
-                                    ToolTipService.ToolTip="返回顶部"
-                                    Command="{x:Bind MainVM.GoTopCommand}"
-                                    CommandParameter="{Binding ElementName=ShowJokeInfoListBox}"/>
-                        </StackPanel>
-                    </RelativePanel>
-                    <ListView x:Name="ShowJokeInfoListBox" Grid.Row="1"   
-                              ItemsSource="{x:Bind MainVM.JokeInfoCollection,Mode=OneWay}"
-                              ItemContainerStyle="{StaticResource JokeInfoListViewItemStyle}" 
-                              IsItemClickEnabled="False"
-                              IncrementalLoadingTrigger="Edge" 
-                              DataFetchSize="2" 
-                              IncrementalLoadingThreshold="0" 
-                               >
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:JokeInfo">
-                                <controls:JokeInfoControl 
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"/>
-                            </DataTemplate>
-
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <CommandBar x:Name="BottomCommandBar" Grid.Row="2">
-                        <CommandBar.PrimaryCommands>
-                            <AppBarButton  Label="刷新" Icon="Refresh" Command="{x:Bind MainVM.RefreshCommand}"/>
-                            <AppBarButton  Label="返回顶部" Icon="Upload" Command="{x:Bind MainVM.GoTopCommand}" CommandParameter="{Binding ElementName=ShowJokeInfoListBox}"/>
-                        </CommandBar.PrimaryCommands>
-                    </CommandBar>
-
-                    <Grid Grid.RowSpan="3" Background="#00000000" IsHitTestVisible="False" Visibility="{x:Bind MainVM.IsBusy,Mode=OneWay,Converter={StaticResource BTVConverter}}">
-                        <Border Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <ProgressRing IsActive="{x:Bind MainVM.IsBusy,Mode=OneWay}" Width="45" Height="45"/>
-                        </Border>
-                    </Grid>
+                    <Frame x:Name="ContentFrame" 
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"/>
+                    <Button x:Name="PhoneMenuBtn"
+                            Visibility="Collapsed"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Height="48" 
+                            Width="48"  
+                            FontFamily="Segoe MDL2 Assets" 
+                            Content="&#xE700;" 
+                            FontSize="24"
+                            Command="{x:Bind MainVM.MenuBtnCommand}"
+                            CommandParameter="{Binding ElementName=MainSplitView}"/>
                 </Grid>
             </SplitView.Content>
         </SplitView>
-
-        <Border Grid.RowSpan="2" Height="40" Visibility="Collapsed" VerticalAlignment="Top" x:Name="MsgToast" Background="{ThemeResource MsgToastBackgroundThemeBrush}">
-            <Border.RenderTransform>
-                <CompositeTransform TranslateX="-120" x:Name="quitTransform"/>
-            </Border.RenderTransform>
-            <TextBlock x:Name="tipText" Text="再按一次退出程序" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
-        </Border>
     </Grid>
 </Page>
 

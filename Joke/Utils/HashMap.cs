@@ -19,6 +19,15 @@ namespace Joke.Utils
             {JokeAPI.Comment,    @"http://m2.qiushibaike.com/article/{0}/comments"},
         };
 
+        public static Dictionary<JokeAPI, string> JokeTitleMap = new Dictionary<JokeAPI, string>()
+        {
+            {JokeAPI.Hot,        "热门"},
+            {JokeAPI.Latest,     "最新"},
+            {JokeAPI.Text,       "文字"},
+            {JokeAPI.Img,        "图片"},
+            {JokeAPI.Video,      "视频"},
+        };
+
         public static Dictionary<RequestMethod, string> RequestMethodMap = new Dictionary<RequestMethod, string>()
         {
             {RequestMethod.POST,                "Post" },

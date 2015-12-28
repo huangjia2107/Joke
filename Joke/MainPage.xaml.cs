@@ -1,6 +1,8 @@
 ﻿using Joke.Data;
+using Joke.Models;
 using Joke.Utils;
 using Joke.ViewModels;
+using Joke.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,47 +27,12 @@ namespace Joke
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        //             if (ApiInformation.IsTypePresent(PlatformAPIHelper.HardwareButtonsAPI))
-        //                 Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtons_BackPressed; 
-
         MainViewModel MainVM { get; set; } = new MainViewModel();
-        bool StoryBoardIsBusy = false;
-
-
         public MainPage()
         {
             this.InitializeComponent();
-
-            MainVM.OnPopupToast += MainVM_OnPopupToast;
-            rootGrid.DataContext = MainVM;      
-        }
-
-        private void MainVM_OnPopupToast(bool IsDisconnected, string Msg)
-        {
-            if (IsDisconnected)
-            {
-                if (StoryBoardIsBusy)
-                    return;
-
-                StoryBoardIsBusy = true;
-                tipText.Text = Msg;
-                MsgVisibleStoryboard.Begin();
-
-            }
-            else
-            {
-                if (StoryBoardIsBusy)
-                {
-                    StoryBoardIsBusy = false;
-                    MsgVisibleStoryboard.Stop();
-                }
-            }
-        }
-
-        private void MenuBtn_Click(object sender, RoutedEventArgs e)
-        {
-            MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
-        }
+            rootGrid.DataContext = MainVM;
+        }   
 
         private void MenuListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -81,6 +48,26 @@ namespace Joke
                         break;
                 }
             }
+
+            MenuItem menuItem = MenuListView.SelectedItem as MenuItem;
+            if (menuItem != null)
+            {
+                switch (menuItem.JokeAPI)
+                {
+                    case JokeAPI.Hot:
+                        ContentFrame.Navigate(typeof(JokeHotPage));
+                        break;
+                    case JokeAPI.Text:
+                        ContentFrame.Navigate(typeof(JokeTextPage));
+                        break;
+                    case JokeAPI.Img:
+                        ContentFrame.Navigate(typeof(JokeImagePage));
+                        break;
+                    case JokeAPI.Video:
+                        ContentFrame.Navigate(typeof(JokeVideoPage));
+                        break;
+                }
+            }
         }
 
         private void ThemeBtn_Click(object sender, RoutedEventArgs e)
@@ -91,12 +78,8 @@ namespace Joke
             //                              this.RequestedTheme = ElementTheme.Light;
 
             (Application.Current.Resources["appSettings"] as AppSetting).IsDarkTheme = !(Application.Current.Resources["appSettings"] as AppSetting).IsDarkTheme;
-
         }
 
-        private void MsgVisibleStoryboard_Completed(object sender, object e)
-        {
-            StoryBoardIsBusy = false;
-        }
+
     }
 }

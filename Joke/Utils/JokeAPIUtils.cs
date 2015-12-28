@@ -1,4 +1,5 @@
 ﻿using Joke.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace Joke.Utils
             T requestResult;
             try
             {
-                requestResult = JsonUtils.Deserialize<T>(str_json);
+                requestResult = JsonConvert.DeserializeObject<T>(str_json);
             }
             catch
             {

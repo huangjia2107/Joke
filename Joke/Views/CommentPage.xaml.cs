@@ -67,6 +67,9 @@ namespace Joke.Views
 
         private void HardwareButtons_BackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
         {
+            if (ApiInformation.IsTypePresent(PlatformAPIHelper.BackPressedEventArgsAPI))
+                e.Handled = true;
+
             BackBtn_Click(sender, null);
         }
 
