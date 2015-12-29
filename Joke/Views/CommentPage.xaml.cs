@@ -37,13 +37,10 @@ namespace Joke.Views
             this.DataContext = CommentVM;
         }
 
-        private void CommentVM_OnPopupToast(bool IsDisconnected, string Msg)
+        private void CommentVM_OnPopupToast(bool IsCancel, string Msg)
         {
-            if (IsDisconnected)
-            {
-                if (StoryBoardIsBusy)
-                    return;
-
+            if (!IsCancel)
+            {           
                 StoryBoardIsBusy = true;
                 tipText.Text = Msg;
                 MsgVisibleStoryboard.Begin();

@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Joke.Models;
 using Joke.Utils;
 using System;
@@ -24,7 +25,7 @@ namespace Joke.ViewModels
 
         #region Property
 
-        public JokeAPI JokeAPI{ get; set; }
+        public JokeAPI JokeAPI { get; set; }
 
         private bool _IsDisConnected;
         public bool IsDisConnected
@@ -77,21 +78,38 @@ namespace Joke.ViewModels
                    return tempJokeResponse;
                });
 
-            _JokeInfoCollection.OnLoadFinished += _JokeInfoCollection_OnLoadFinished;
+            _JokeInfoCollection.OnLoadStatusChanged += _JokeInfoCollection_OnLoadStatusChanged;
             _JokeInfoCollection.OnNetworkStatusChanged += _JokeInfoCollection_OnNetworkStatusChanged;
+        }
+
+        private void _JokeInfoCollection_OnLoadStatusChanged(LoadStatusArgs args)
+        {
+            switch (args.Status)
+            {
+                case LoadStatus.Empty:
+
+                    Messenger.Default.Send(
+                        new PopupToastArgs { IsCancel = false, Msg = "未能获取到任何内容！" },
+                        MessageHelper.PopupToastToken);
+
+                    break;
+                case LoadStatus.Finish:
+
+                    Messenger.Default.Send(
+                        new PopupToastArgs { IsCancel = false, Msg = "全部内容已获取完毕！" },
+                        MessageHelper.PopupToastToken);
+
+                    break;
+            }
         }
 
         private void _JokeInfoCollection_OnNetworkStatusChanged(bool IsDisconnected)
         {
             this.IsDisConnected = IsDisconnected;
 
-            if (OnPopupToast != null)
-                OnPopupToast(IsDisconnected, "当前网络异常！");
-        }
-
-        private void _JokeInfoCollection_OnLoadFinished(int responseTotalCount, int realTotalCount)
-        {
-            //Finish.
+            Messenger.Default.Send(
+                new PopupToastArgs { IsCancel = !IsDisConnected, Msg = "当前网络异常！" },
+                MessageHelper.PopupToastToken);
         }
 
         #endregion
@@ -146,13 +164,6 @@ namespace Joke.ViewModels
             return true;
         }
 
-        #endregion
-
-        #region Event
-
-        public delegate void PopupToast(bool IsDisconnected, string Msg);
-        public event PopupToast OnPopupToast;
-
-        #endregion
+        #endregion    
     }
 }

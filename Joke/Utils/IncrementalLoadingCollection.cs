@@ -39,8 +39,8 @@ namespace Joke.Utils
         }
 
         //加载完成通知
-        public delegate void LoadFinished(int responseTotalCount, int realTotalCount);
-        public event LoadFinished OnLoadFinished;
+        public delegate void LoadStatusChanged(LoadStatusArgs args);
+        public event LoadStatusChanged OnLoadStatusChanged;
 
         public delegate void NetworkStatusChanged(bool IsDisconnected);
         public event NetworkStatusChanged OnNetworkStatusChanged;
@@ -99,11 +99,15 @@ namespace Joke.Utils
 
                 var response = await funcGetData(pageIndex, this.requestCount);
                 if (response == null)
-                    return new LoadMoreItemsResult { Count = 0 };
+                {
+                    if (this.OnLoadStatusChanged != null)
+                        this.OnLoadStatusChanged(new LoadStatusArgs { Status = LoadStatus.Empty });
 
+                    return new LoadMoreItemsResult { Count = 0 };
+                }
 
                 pageIndex++;
-                _HasMoreItems = response.count != 0;
+                _HasMoreItems = (response.count != 0);
 
                 if (_HasMoreItems)
                 {
@@ -117,8 +121,14 @@ namespace Joke.Utils
                 {
                     System.Diagnostics.Debug.WriteLine("======== Response Total Count : " + responseCount + ", Real Total Count : " + this.Count + " ========");
 
-                    if (this.OnLoadFinished != null)
-                        this.OnLoadFinished(responseCount, this.Count);
+                    if (this.OnLoadStatusChanged != null)
+                        this.OnLoadStatusChanged(
+                            new LoadStatusArgs
+                            {
+                                Status = LoadStatus.Finish,
+                                ResponseTotalCount = (int)requestCount,
+                                RealTotalCount = this.Count
+                            });
                 }
 
                 return new LoadMoreItemsResult { Count = response.items == null ? 0 : (uint)response.items.Length };

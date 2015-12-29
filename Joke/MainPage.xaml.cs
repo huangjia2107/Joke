@@ -1,4 +1,5 @@
-﻿using Joke.Data;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Joke.Data;
 using Joke.Models;
 using Joke.Utils;
 using Joke.ViewModels;
@@ -28,11 +29,33 @@ namespace Joke
     public sealed partial class MainPage : Page
     {
         MainViewModel MainVM { get; set; } = new MainViewModel();
+        bool StoryBoardIsBusy = false;
+
         public MainPage()
         {
             this.InitializeComponent();
+            Messenger.Default.Register<PopupToastArgs>(this, MessageHelper.PopupToastToken, HandlePopupToastMessage);
+
             rootGrid.DataContext = MainVM;
-        }   
+        }
+
+        private void HandlePopupToastMessage(PopupToastArgs args)
+        {
+            if (!args.IsCancel)
+            {        
+                StoryBoardIsBusy = true;
+                tipText.Text = args.Msg;
+                MsgVisibleStoryboard.Begin();
+            }
+            else
+            {
+                if (StoryBoardIsBusy)
+                {
+                    StoryBoardIsBusy = false;
+                    MsgVisibleStoryboard.Stop();
+                }
+            }
+        }
 
         private void MenuListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -80,6 +103,9 @@ namespace Joke
             (Application.Current.Resources["appSettings"] as AppSetting).IsDarkTheme = !(Application.Current.Resources["appSettings"] as AppSetting).IsDarkTheme;
         }
 
-
+        private void MsgVisibleStoryboard_Completed(object sender, object e)
+        {
+            StoryBoardIsBusy = false;
+        }
     }
 }

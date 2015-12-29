@@ -21,43 +21,14 @@ namespace Joke.UserControls
 {
     public sealed partial class JokePanelControl : UserControl
     {
-        JokeViewModel JokeVM { get; set; }
-        bool StoryBoardIsBusy = false;
+        JokeViewModel JokeVM { get; set; }   
 
         public JokePanelControl(JokeAPI jokeAPI)
         {
             this.InitializeComponent();
 
-            JokeVM = new JokeViewModel(jokeAPI);
-            JokeVM.OnPopupToast += JokeVM_OnPopupToast;
-
+            JokeVM = new JokeViewModel(jokeAPI);   
             this.DataContext = JokeVM;
-        }
-
-        private void JokeVM_OnPopupToast(bool IsDisconnected, string Msg)
-        {
-            if (IsDisconnected)
-            {
-                if (StoryBoardIsBusy)
-                    return;
-
-                StoryBoardIsBusy = true;
-                tipText.Text = Msg;
-                MsgVisibleStoryboard.Begin();
-            }
-            else
-            {
-                if (StoryBoardIsBusy)
-                {
-                    StoryBoardIsBusy = false;
-                    MsgVisibleStoryboard.Stop();
-                }
-            }
-        }
-
-        private void MsgVisibleStoryboard_Completed(object sender, object e)
-        {
-            StoryBoardIsBusy = false;
-        }    
+        }          
     }
 }

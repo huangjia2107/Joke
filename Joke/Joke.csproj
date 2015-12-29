@@ -123,9 +123,6 @@
     <Compile Include="UserControls\CommentInfoControl.xaml.cs">
       <DependentUpon>CommentInfoControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CommentPanelControl.xaml.cs">
-      <DependentUpon>CommentPanelControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\JokeInfoControl.xaml.cs">
       <DependentUpon>JokeInfoControl.xaml</DependentUpon>
     </Compile>
@@ -141,6 +138,7 @@
     <Compile Include="Utils\IncrementalLoadingCollection.cs" />
     <Compile Include="Utils\JokeAPIUtils.cs" />
     <Compile Include="Utils\JsonUtils.cs" />
+    <Compile Include="Utils\MessageHelper.cs" />
     <Compile Include="Utils\PlatformAPIHelper.cs" />
     <Compile Include="Utils\TypeDeclare.cs" />
     <Compile Include="ViewModels\CommentViewModel.cs" />
@@ -209,10 +207,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\CommentInfoControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\CommentPanelControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

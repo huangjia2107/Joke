@@ -138,7 +138,7 @@ namespace Joke.ViewModels
                    return tempJokeResponse;
                });
 
-            _CommentCollection.OnLoadFinished += _CommentCollection_OnLoadFinished;
+            _CommentCollection.OnLoadStatusChanged += _JokeInfoCollection_OnLoadStatusChanged;
             _CommentCollection.OnNetworkStatusChanged += _JokeInfoCollection_OnNetworkStatusChanged;
         }
 
@@ -147,19 +147,33 @@ namespace Joke.ViewModels
             this.IsDisConnected = IsDisconnected;
 
             if (OnPopupToast != null)
-                OnPopupToast(IsDisconnected, "当前网络异常！");
+                OnPopupToast(!IsDisconnected, "当前网络异常！");
         }
 
-        private void _CommentCollection_OnLoadFinished(int responseTotalCount, int realTotalCount)
+        private void _JokeInfoCollection_OnLoadStatusChanged(LoadStatusArgs args)
         {
-            ///Finish.
+            switch (args.Status)
+            {
+                case LoadStatus.Empty:
+
+                    if (OnPopupToast != null)
+                        OnPopupToast(false, "未能获取到任何内容！");
+
+                    break;
+                case LoadStatus.Finish:
+
+                    if (OnPopupToast != null)
+                        OnPopupToast(false, "全部评论已获取完毕！");
+
+                    break;
+            }
         }
 
         #endregion
 
         #region Event
 
-        public delegate void PopupToast(bool IsDisconnected, string Msg);
+        public delegate void PopupToast(bool IsCancel, string Msg);
         public event PopupToast OnPopupToast;
 
         #endregion

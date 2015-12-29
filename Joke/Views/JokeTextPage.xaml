@@ -8,7 +8,7 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Grid x:Name="rootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="rootGrid">
          
     </Grid>
 </Page>

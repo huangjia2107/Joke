@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Joke.Utils
-{ 
+{
     public enum JokeAPI
     {
         Latest,  //最新 （包含图片及视频）
@@ -29,5 +29,18 @@ namespace Joke.Utils
     {
         CHARSET_UTF8,
         CHARSET_GB2312
+    }
+
+    public enum LoadStatus
+    {
+        Empty,
+        Finish
+    }
+
+    public class LoadStatusArgs
+    {
+        public LoadStatus Status { get; set; }
+        public int ResponseTotalCount { get; set; }
+        public int RealTotalCount { get; set; }
     }
 }

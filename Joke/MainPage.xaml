@@ -12,9 +12,19 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <utils:BoolToVisibilityConverter x:Key="BTVConverter"/>
+    <Page.Resources>                                            
         <utils:MenuItemToObjectConverter x:Key="MTOConverter"/>
+
+        <Storyboard x:Name="MsgVisibleStoryboard" FillBehavior="Stop" Duration="0:0:3" Completed="MsgVisibleStoryboard_Completed">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MsgToast">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="MsgToast"/>
+        </Storyboard>
     </Page.Resources>
 
     <Grid x:Name="rootGrid" Background="{ThemeResource AppBackgroundThemeBrush}" >
@@ -164,6 +174,13 @@
                 </Grid>
             </SplitView.Content>
         </SplitView>
+
+        <Border Height="40" Visibility="Collapsed" VerticalAlignment="Top" x:Name="MsgToast" Background="{ThemeResource MsgToastBackgroundThemeBrush}">
+            <Border.RenderTransform>
+                <CompositeTransform TranslateX="-120" x:Name="quitTransform"/>
+            </Border.RenderTransform>
+            <TextBlock x:Name="tipText" Text="再按一次退出程序" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+        </Border>
     </Grid>
 </Page>
 
