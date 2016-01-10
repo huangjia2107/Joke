@@ -1,0 +1,319 @@
+﻿<Page
+    x:Class="Joke.Views.UserPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Joke.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    RequestedTheme="{Binding Source={StaticResource appSettings},Converter={StaticResource BTTConverter}, Path=IsDarkTheme, Mode=OneWay}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource AppBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="rootGridVSG">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1001"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopOperationBtn.Visibility" Value="Visible"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="MiddleState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="601"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopOperationBtn.Visibility" Value="Visible"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopOperationBtn.Visibility" Value="Collapsed"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <RelativePanel x:Name="TopBarPanel" Background="{x:Bind BottomCommandBar.Background,Mode=OneWay}">
+            <Button x:Name="BackBtn" 
+                    Height="48" 
+                    Width="48"             
+                    RelativePanel.AlignLeftWithPanel="True" 
+                    FontFamily="Segoe MDL2 Assets" 
+                    Content="&#xE72B;" 
+                    FontSize="24"
+                    Click="BackBtn_Click"
+                                />
+            <TextBlock x:Name="TitleTextBlock" 
+                       FontSize="18"          
+                       Text="我" 
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"  
+                       RelativePanel.AlignVerticalCenterWithPanel="True"
+                                   />
+            <StackPanel x:Name="TopOperationBtn" Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
+                <Button x:Name="RefreshBtn" 
+                        Height="48" 
+                        Width="60"  
+                        FontFamily="Segoe MDL2 Assets" 
+                        Content="&#xE149;" 
+                        FontSize="24"         
+                        ToolTipService.ToolTip="刷新"
+                         />
+                <Button x:Name="GoTopBtn" 
+                        Height="48" 
+                        Width="60"  
+                        FontFamily="Segoe MDL2 Assets" 
+                        Content="&#xE11C;" 
+                        FontSize="24"        
+                        ToolTipService.ToolTip="返回顶部"
+                         />
+            </StackPanel>
+        </RelativePanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Background="#FFFFD52B">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Ellipse Height="90" Width="90">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="ms-Appx:///Assets/Images/void.jpg"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <TextBlock Grid.Row="1"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Text="WSIDFU"
+                           FontSize="18"
+                           Foreground="White" Margin="0,0,0,15"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid  Margin="0,12,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Gray" Opacity="0.5" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center" 
+                           Text="内容"
+                           FontSize="13"
+                           Margin="8,5"/>
+                    <Path Grid.Column="2" Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Gray" Opacity="0.5" VerticalAlignment="Center"/>
+
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="PublishBtn"     
+                                HorizontalContentAlignment="Stretch" 
+                                Padding="0,8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                   Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xEA54;"
+                                   FontSize="35"/>
+                            <TextBlock Grid.Row="1" Text="已发表" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="CommentBtn" 
+                            Grid.Column="1"
+                                HorizontalContentAlignment="Stretch" 
+                                Padding="0,8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                   Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE932;"
+                                   FontSize="35"/>
+                            <TextBlock Grid.Row="1" Text="已评论" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="CollectBtn" 
+                            Grid.Column="2"
+                                HorizontalContentAlignment="Stretch" 
+                                Padding="0,8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                   Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE006;"
+                                   FontSize="35"/>
+                            <TextBlock Grid.Row="1" Text="已收藏" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="2" Margin="0,12,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Gray" Opacity="0.5" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center" 
+                           Text="操作"
+                           FontSize="13"
+                           Margin="8,0"/>
+                    <Path Grid.Column="2" Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Gray" Opacity="0.5" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="SubmitBtn"     
+                                HorizontalContentAlignment="Stretch" 
+                                Padding="0,8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                   Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE109;"
+                                   FontSize="35"/>
+                            <TextBlock Grid.Row="1" Text="发帖" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="AuditBtn" 
+                            Grid.Column="1"    
+                                HorizontalContentAlignment="Stretch" 
+                                Padding="0,8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                   Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE16E;"
+                                   FontSize="35"/>
+                            <TextBlock Grid.Row="1" Text="审贴" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>      
+                </Grid>
+            </Grid> 
+            
+             
+            <Grid Width="300" Grid.Row="1" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Border BorderThickness="0,1" Background="White"  Padding="0,0,8,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" 
+                                   Grid.Row="0"
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Center"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE77B;"
+                                   FontSize="18"/>
+                            <TextBox Grid.Column="1"
+                                 Grid.Row="0"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Padding="0,5,0,0"
+                                 PlaceholderText ="昵称或邮箱"
+                                 VerticalAlignment="Center"
+                                 />
+                            <Path Grid.Row="1" Grid.Column="1" Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Gray" Opacity="0.5"/>
+                            <TextBlock Grid.Column="0" 
+                                   Grid.Row="2"
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Center"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE72E;"
+                                   Margin="0,0,0,2"
+                                   FontSize="18"/>
+                            <PasswordBox Grid.Column="1"
+                                     Grid.Row="2"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     Padding="0,4,0,0"
+                                     PlaceholderText ="密码"
+                                     VerticalAlignment="Center"
+                                     />
+                        </Grid>
+                    </Border>
+
+                    <RelativePanel Grid.Row="1" Margin="0,8">
+                        <CheckBox RelativePanel.AlignLeftWithPanel="true" Content="自动登录" FontSize="14" Visibility="Collapsed"/>
+                        <HyperlinkButton RelativePanel.AlignRightWithPanel="True" Content="忘记密码？"  NavigateUri="http://dv.56.com/funny/" FontSize="14" Foreground="#FF007ACC"/>
+                    </RelativePanel>
+                    <Button Grid.Row="2" Width="300" Height="48" Content="登录" Style="{StaticResource BgButtonStyle}"/>
+                </Grid>
+            
+        </Grid>
+
+        <CommandBar x:Name="BottomCommandBar" Grid.Row="2">
+            <CommandBar.PrimaryCommands>
+                <AppBarButton  Label="刷新" Icon="Refresh" />
+                <AppBarButton  Label="注销">
+                    <AppBarButton.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7E8;" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Grid>
+</Page>

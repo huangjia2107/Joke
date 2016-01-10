@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using Joke.Models;
 using Joke.Utils;
+using Joke.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Joke.ViewModels
@@ -116,6 +118,30 @@ namespace Joke.ViewModels
         }
 
         bool CanGoTopExecute(SplitView splitView)
+        {
+            return true;
+        }
+
+        RelayCommand openUserCommand { get; set; }
+        public ICommand OpenUserCommand
+        {
+            get
+            {
+                if (openUserCommand == null)
+                    openUserCommand = new RelayCommand(() =>
+                    {
+                        Frame rootFrame = Window.Current.Content as Frame;
+                        if (rootFrame != null)
+                        {
+                            rootFrame.Navigate(typeof(UserPage), this);
+                        }
+                    }, CanOpenUserExecute);
+
+                return openUserCommand;
+            }
+        }
+
+        bool CanOpenUserExecute()
         {
             return true;
         }

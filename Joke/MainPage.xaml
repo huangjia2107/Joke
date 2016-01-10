@@ -107,6 +107,7 @@
                         <Button x:Name="MineBtn" 
                                 Height="48"         
                                 HorizontalContentAlignment="Stretch" 
+                                Command="{x:Bind MainVM.OpenUserCommand}"
                                 Padding="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
