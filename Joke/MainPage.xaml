@@ -12,8 +12,9 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Page.Resources>                                            
+    <Page.Resources>
         <utils:MenuItemToObjectConverter x:Key="MTOConverter"/>
+        <utils:BoolToVisibilityConverter x:Key="BTVConverter"/>
 
         <Storyboard x:Name="MsgVisibleStoryboard" FillBehavior="Stop" Duration="0:0:3" Completed="MsgVisibleStoryboard_Completed">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MsgToast">
@@ -115,12 +116,12 @@
                                     <ColumnDefinition Width="10"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Ellipse Height="36" Width="36">
+                                <Ellipse Height="26" Width="26">
                                     <Ellipse.Fill>
-                                        <ImageBrush ImageSource="ms-appx:///Assets/Images/missing.png"/>
+                                        <ImageBrush ImageSource="{x:Bind MainVM.UserPic,Mode=OneWay}"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                <TextBlock Grid.Column="2" Text="请登录..." FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="{x:Bind MainVM.UserName,Mode=OneWay}" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             </Grid>
                         </Button>
                         <Button x:Name="SettingBtn" 

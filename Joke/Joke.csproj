@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="Utils\Algorithm.cs" />
     <Compile Include="Utils\Converters.cs" />
+    <Compile Include="Utils\FileHelper.cs" />
     <Compile Include="Utils\HashMap.cs" />
     <Compile Include="Utils\IncrementalLoadingCollection.cs" />
     <Compile Include="Utils\JokeAPIUtils.cs" />
@@ -144,8 +145,12 @@
     <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="ViewModels\JokeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserCenterViewModel.cs" />
     <Compile Include="Views\CommentPage.xaml.cs">
       <DependentUpon>CommentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JokeSuggestPage.xaml.cs">
+      <DependentUpon>JokeSuggestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\JokeHotPage.xaml.cs">
       <DependentUpon>JokeHotPage.xaml</DependentUpon>
@@ -159,8 +164,8 @@
     <Compile Include="Views\JokeVideoPage.xaml.cs">
       <DependentUpon>JokeVideoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserPage.xaml.cs">
-      <DependentUpon>UserPage.xaml</DependentUpon>
+    <Compile Include="Views\UserCenterPage.xaml.cs">
+      <DependentUpon>UserCenterPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -173,8 +178,8 @@
     <Content Include="Assets\Images\anony.jpg" />
     <Content Include="Assets\Images\default.png" />
     <Content Include="Assets\Images\logo.png" />
-    <Content Include="Assets\Images\missing.png" />
-    <Content Include="Assets\Images\void.jpg" />
+    <Content Include="Assets\Images\void.png" />
+    <Content Include="Assets\Images\missing.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -205,9 +210,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Styles\OtherResources.xaml">
+    <Page Include="Resources\Styles\CommonResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\Password_Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Resources\Styles\TextBox_Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="UserControls\CommentInfoControl.xaml">
       <SubType>Designer</SubType>
@@ -229,6 +244,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\JokeSuggestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\JokeHotPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,7 +264,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserPage.xaml">
+    <Page Include="Views\UserCenterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

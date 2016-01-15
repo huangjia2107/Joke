@@ -67,7 +67,7 @@
                 </Grid.ColumnDefinitions>
                 <Ellipse Height="40" Width="40" Visibility="{Binding is_anonymous,Mode=OneWay,Converter={StaticResource BTVConverter},ConverterParameter={StaticResource collapsed}}">
                     <Ellipse.Fill>
-                        <ImageBrush ImageSource="ms-Appx:///Assets/Images/void.jpg"/>
+                        <ImageBrush ImageSource="ms-Appx:///Assets/Images/missing.jpg"/>
                     </Ellipse.Fill>
                 </Ellipse>
                 <Ellipse Height="40" Width="40" Visibility="{Binding is_anonymous,Mode=OneWay,Converter={StaticResource BTVConverter},ConverterParameter={StaticResource collapsed}}">

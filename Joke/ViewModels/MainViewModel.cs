@@ -12,6 +12,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation;
+using Windows.Security.Credentials;
+using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -19,12 +24,111 @@ namespace Joke.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private IAsyncAction m_workItem;
         public MainViewModel()
         {
+            UserLoginInfo = new LoginInfo();
             InitMenuItemCollection();
+            Init();
+        }
+
+        private void Init()
+        {
+            IAsyncAction asyncAction = ThreadPool.RunAsync(async (workItem) =>
+            {
+
+                //           if (workItem.Status == AsyncStatus.Canceled)
+                //               break;
+//                 if (Algorithm.IsNetworkValid() == false)
+//                     return;
+
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                         new DispatchedHandler(() =>
+                         {
+                             IsBusy = true;
+                             UserName = "正在登录...";
+                         }));
+
+                IReadOnlyList<PasswordCredential> pcList = FileHelper.RetrieveAllCredential();
+                if (pcList != null)
+                {
+                    pcList[0].RetrievePassword();
+                    LoginInfo resultInfo = await JokeAPIUtils.GetLoginInfo(pcList[0].UserName, pcList[0].Password);
+                    if (resultInfo != null)
+                    {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                            new DispatchedHandler(() =>
+                        {
+                            if (resultInfo.err == 0)
+                            {
+                                resultInfo.userid = pcList[0].UserName;
+                                resultInfo.userpassword = pcList[0].Password;
+
+                                UserLoginInfo = resultInfo;
+                            }
+                            else
+                                UserName = "请登录";
+                        }));
+                    }
+                }
+                else
+                {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                         new DispatchedHandler(() =>
+                         {
+                             UserName = "请登录";
+                         }));
+                }
+            });
+
+            m_workItem = asyncAction;
+            asyncAction.Completed = new AsyncActionCompletedHandler(async (IAsyncAction asyncInfo, AsyncStatus asyncStatus) =>
+            {
+                if (asyncStatus == AsyncStatus.Canceled)
+                    return;
+
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                 {
+                     IsBusy = false;
+                 }));
+            });
         }
 
         #region Property     
+
+        private LoginInfo _UserLoginInfo;
+        public LoginInfo UserLoginInfo
+        {
+            get { return _UserLoginInfo; }
+            set
+            {
+                _UserLoginInfo = value;
+
+                UserName = value.user.login;
+                UserPic = value.user.real_icon;
+            }
+        }
+
+        private string _UserName;
+        public string UserName
+        {
+            get { return _UserName; }
+            set { _UserName = value; RaisePropertyChanged("UserName"); }
+        }
+
+        private string _UserPic;
+        public string UserPic
+        {
+            get { return _UserPic; }
+            set { _UserPic = value; RaisePropertyChanged("UserPic"); }
+        }
+
+        private bool _IsBusy;
+        public bool IsBusy
+        {
+            get { return _IsBusy; }
+            set { _IsBusy = value; RaisePropertyChanged("IsBusy"); }
+        }
 
         public MenuItem _SelectedMenuItem;
         public MenuItem SelectedMenuItem
@@ -42,7 +146,7 @@ namespace Joke.ViewModels
         {
             get { return _MenuItemCollection; }
             set { _MenuItemCollection = value; RaisePropertyChanged("MenuItemCollection"); }
-        }             
+        }
 
         #endregion
 
@@ -52,20 +156,12 @@ namespace Joke.ViewModels
         {
             _MenuItemCollection = new ObservableCollection<MenuItem>()
             {
-//                 new MenuItem
-//                 {
-//                     Icon="\uE121",
-//                     IconFontSize=25,
-//                     Title="最新",
-//                     JokeAPI=JokeAPI.Latest
-//                 },
-
                 new MenuItem
                 {
-                    Icon="\uE7AC",
+                    Icon="\uE12A",
                     IconFontSize=24,
-                    Title="热门",
-                    JokeAPI=JokeAPI.Hot
+                    Title="图文",
+                    JokeAPI=JokeAPI.Suggest
                 },
 
                 new MenuItem
@@ -91,10 +187,26 @@ namespace Joke.ViewModels
                     Title="视频",
                     JokeAPI=JokeAPI.Video
                 },
+
+                new MenuItem
+                {
+                    Icon="\uE7AC",
+                    IconFontSize=24,
+                    Title="热门",
+                    JokeAPI=JokeAPI.Hot
+                },
+
+//                 new MenuItem
+//                 {
+//                      Icon="\uE121",
+//                      IconFontSize=25,
+//                      Title="最新",
+//                      JokeAPI=JokeAPI.Latest
+//                 }
             };
 
             SelectedMenuItem = _MenuItemCollection.FirstOrDefault();
-        }     
+        }
 
         #endregion
 
@@ -111,13 +223,13 @@ namespace Joke.ViewModels
                         if (splitView != null)
                             splitView.IsPaneOpen = !splitView.IsPaneOpen;
 
-                    }, CanGoTopExecute);
+                    }, CanMenuExecute);
 
                 return menuBtnCommand;
             }
         }
 
-        bool CanGoTopExecute(SplitView splitView)
+        bool CanMenuExecute(SplitView splitView)
         {
             return true;
         }
@@ -133,7 +245,7 @@ namespace Joke.ViewModels
                         Frame rootFrame = Window.Current.Content as Frame;
                         if (rootFrame != null)
                         {
-                            rootFrame.Navigate(typeof(UserPage), this);
+                            rootFrame.Navigate(typeof(UserCenterPage), this.UserLoginInfo);
                         }
                     }, CanOpenUserExecute);
 
@@ -143,7 +255,7 @@ namespace Joke.ViewModels
 
         bool CanOpenUserExecute()
         {
-            return true;
+            return !IsBusy;
         }
 
         #endregion

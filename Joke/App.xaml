@@ -6,18 +6,28 @@
     RequestedTheme="Light">
 
     <Application.Resources>
-        <ResourceDictionary>
+        <ResourceDictionary>                         
             <ResourceDictionary.ThemeDictionaries>
 
                 <ResourceDictionary x:Key="Light">
                     <x:Boolean x:Key="IsDarkTheme">false</x:Boolean>
+
+                    <SolidColorBrush x:Key="TextBlockForegroundThemeBrush" Color="#FF303030"/>
+                    <SolidColorBrush x:Key="TextBlockDisabledThemeBrush" Color="#FF808080"/>
+
+                    <SolidColorBrush x:Key="TextBoxForegroundThemeBrush" Color="#FF303030"/>
+                    <SolidColorBrush x:Key="TextBoxBackgroundThemeBrush" Color="White"/>
+
                     <!--Button-->
+                    <SolidColorBrush x:Key="ButtonBackgroundThemeBrush" Color="#E6E6E6"/>
                     <SolidColorBrush x:Key="ButtonForegroundThemeBrush" Color="Black"/>
                     <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrush" Color="#FFF1F1F1"/>
                     <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrush" Color="#FFE6E6E6"/>
                     <SolidColorBrush x:Key="ButtonDisabledForegroundThemeBrush" Color="#FF808080"/>
 
+                    <SolidColorBrush x:Key="ApplicationBarBackgroundThemeBrush" Color="#E6E6E6"/>
                     <SolidColorBrush x:Key="AppBackgroundThemeBrush" Color="#FFEEEEF2"/>
+                    
                     <SolidColorBrush x:Key="ListViewItemBackgroundThemeBrush" Color="White"/>
                     <SolidColorBrush x:Key="ListBoxForegroundThemeBrush" Color="#FF303030"/>
 
@@ -26,12 +36,21 @@
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <x:Boolean x:Key="IsDarkTheme">true</x:Boolean>
+                    <SolidColorBrush x:Key="TextBlockForegroundThemeBrush" Color="#FF969696"/>
+                    <SolidColorBrush x:Key="TextBlockDisabledThemeBrush" Color="#FF808080"/>
+
+                    <SolidColorBrush x:Key="TextBoxForegroundThemeBrush" Color="#FF969696"/>
+                    <SolidColorBrush x:Key="TextBoxBackgroundThemeBrush" Color="#1F1F1F"/>
+
+                    <SolidColorBrush x:Key="ButtonBackgroundThemeBrush" Color="#1F1F1F"/>
                     <SolidColorBrush x:Key="ButtonForegroundThemeBrush" Color="White"/>
                     <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrush" Color="#FF353535"/>
                     <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrush" Color="#FF4C4C4C"/>
                     <SolidColorBrush x:Key="ButtonDisabledForegroundThemeBrush" Color="#FF808080"/>
 
+                    <SolidColorBrush x:Key="ApplicationBarBackgroundThemeBrush" Color="#1F1F1F"/>
                     <SolidColorBrush x:Key="AppBackgroundThemeBrush" Color="#FF000000"/>
+                    
                     <SolidColorBrush x:Key="ListViewItemBackgroundThemeBrush" Color="#FF1A1A1A"/>
                     <SolidColorBrush x:Key="ListBoxForegroundThemeBrush" Color="#FF969696"/>
 
@@ -41,12 +60,21 @@
                 <ResourceDictionary x:Key="Default">
                     <!--Mobile:Follow the system   PC:Dark  -->
                     <x:Boolean x:Key="IsDarkTheme">false</x:Boolean>
+                    <SolidColorBrush x:Key="TextBlockForegroundThemeBrush" Color="#FF969696"/>
+                    <SolidColorBrush x:Key="TextBlockDisabledThemeBrush" Color="#FF808080"/>
+
+                    <SolidColorBrush x:Key="TextBoxForegroundThemeBrush" Color="#FF969696"/>
+                    <SolidColorBrush x:Key="TextBoxBackgroundThemeBrush" Color="#1F1F1F"/>
+
+                    <SolidColorBrush x:Key="ButtonBackgroundThemeBrush" Color="#1F1F1F"/>
                     <SolidColorBrush x:Key="ButtonForegroundThemeBrush" Color="White"/>
                     <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrush" Color="#FF353535"/>
                     <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrush" Color="#FF4C4C4C"/>
                     <SolidColorBrush x:Key="ButtonDisabledForegroundThemeBrush" Color="#FF808080"/>
 
+                    <SolidColorBrush x:Key="ApplicationBarBackgroundThemeBrush" Color="#1F1F1F"/>
                     <SolidColorBrush x:Key="AppBackgroundThemeBrush" Color="#FF000000"/>
+                    
                     <SolidColorBrush x:Key="ListViewItemBackgroundThemeBrush" Color="#FF1A1A1A"/>
                     <SolidColorBrush x:Key="ListViewItemForegroundThemeBrush" Color="#FF969696"/>
 
@@ -54,10 +82,12 @@
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/OtherResources.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/CommonResources.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/Button_Style.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/ListView_Style.xaml"/>
                 <ResourceDictionary Source="Resources/Styles/CheckBox_Style.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/TextBox_Style.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/Password_Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

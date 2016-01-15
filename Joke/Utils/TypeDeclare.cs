@@ -10,6 +10,7 @@ namespace Joke.Utils
     {
         Latest,  //最新 （包含图片及视频）
         Hot,  //最热 （包含图片及视频）
+        Suggest, //图文
         Text, //段子
         Img, //图片
         Video,  //视频

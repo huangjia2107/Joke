@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Joke.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,14 @@ namespace Joke.Utils
         public string Msg { get; set; }
     }
 
+    public class UserStatusArgs
+    {
+        public LoginInfo UserLoginInfo { get; set; }
+    }
+
     public class MessageHelper
     {
         public static readonly string PopupToastToken = "PopupTost";
+        public static readonly string UserStatusToken = "UserStatus";
     }
 }

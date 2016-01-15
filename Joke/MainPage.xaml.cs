@@ -35,6 +35,7 @@ namespace Joke
         {
             this.InitializeComponent();
             Messenger.Default.Register<PopupToastArgs>(this, MessageHelper.PopupToastToken, HandlePopupToastMessage);
+            Messenger.Default.Register<UserStatusArgs>(this, MessageHelper.UserStatusToken, HandleUserStatusMessage);
 
             rootGrid.DataContext = MainVM;
         }
@@ -42,7 +43,7 @@ namespace Joke
         private void HandlePopupToastMessage(PopupToastArgs args)
         {
             if (!args.IsCancel)
-            {        
+            {
                 StoryBoardIsBusy = true;
                 tipText.Text = args.Msg;
                 MsgVisibleStoryboard.Begin();
@@ -55,6 +56,15 @@ namespace Joke
                     MsgVisibleStoryboard.Stop();
                 }
             }
+        }
+
+        private void HandleUserStatusMessage(UserStatusArgs args)
+        {
+            if (args == null)
+                return;
+
+            if(args.UserLoginInfo!=null)
+                MainVM.UserLoginInfo = args.UserLoginInfo;
         }
 
         private void MenuListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -77,6 +87,9 @@ namespace Joke
             {
                 switch (menuItem.JokeAPI)
                 {
+                    case JokeAPI.Suggest:
+                        ContentFrame.Navigate(typeof(JokeSuggestPage));
+                        break;
                     case JokeAPI.Hot:
                         ContentFrame.Navigate(typeof(JokeHotPage));
                         break;

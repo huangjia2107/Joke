@@ -12,6 +12,7 @@ namespace Joke.Utils
         {
             {JokeAPI.Hot,        @"http://m2.qiushibaike.com/article/list/hot"},
             {JokeAPI.Latest,     @"http://m2.qiushibaike.com/article/list/latest"},
+            {JokeAPI.Suggest,    @"http://m2.qiushibaike.com/article/list/suggest"},
             {JokeAPI.Text,       @"http://m2.qiushibaike.com/article/list/text"},
             {JokeAPI.Img,        @"http://m2.qiushibaike.com/article/list/imgrank"},
             {JokeAPI.Video,      @"http://m2.qiushibaike.com/article/list/video"},
@@ -21,6 +22,7 @@ namespace Joke.Utils
 
         public static Dictionary<JokeAPI, string> JokeTitleMap = new Dictionary<JokeAPI, string>()
         {
+            {JokeAPI.Suggest,    "图文"},
             {JokeAPI.Hot,        "热门"},
             {JokeAPI.Latest,     "最新"},
             {JokeAPI.Text,       "文字"},

@@ -35,7 +35,7 @@ namespace Joke.Utils
             LoginInfo loginInfo = null;
             string param = "{\"login\":\"" + loginName + "\",\"pass\":\"" + loginPass + "\"}";
 
-            loginInfo = await GetObjResult<LoginInfo>(HashMap.JokeAPIMap[JokeAPI.Signin], param);
+            loginInfo = await GetObjResult<LoginInfo>(HashMap.JokeAPIMap[JokeAPI.Signin], param, RequestMethod.POST);
             return loginInfo;
         }
 

@@ -18,6 +18,9 @@ namespace Joke.Data
         const string Key_IsDarkTheme = "IsDarkTheme";
         const bool Value_IsDarkTheme = false;
 
+        const string Key_IsSighIn = "IsSighIn";
+        const bool Value_IsSighIn = false;
+
         public AppSetting()
         {
             localSettings = ApplicationData.Current.LocalSettings;
@@ -27,8 +30,15 @@ namespace Joke.Data
         public bool IsDarkTheme
         {
             get { return GetValueOrDefault<bool>(Key_IsDarkTheme, Value_IsDarkTheme); }
-            set { AddOrUpdateValue(Key_IsDarkTheme, value); RaisePropertyChanged("IsDarkTheme"); }
+            set { AddOrUpdateValue(Key_IsDarkTheme, value); RaisePropertyChanged(Key_IsDarkTheme); }
         }
+
+        public bool IsSighIn
+        {
+            get { return GetValueOrDefault<bool>(Key_IsSighIn, Value_IsSighIn); }
+            set { AddOrUpdateValue(Key_IsSighIn, value); RaisePropertyChanged(Key_IsSighIn); }
+        }
+
 
 
 
