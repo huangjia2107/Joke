@@ -75,6 +75,7 @@
                     FontFamily="Segoe MDL2 Assets" 
                     Content="&#xE72B;" 
                     FontSize="24"
+                    ToolTipService.ToolTip="返回"
                     Click="BackBtn_Click"
                                 />
             <TextBlock x:Name="TitleTextBlock" 

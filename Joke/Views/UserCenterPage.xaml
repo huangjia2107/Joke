@@ -109,7 +109,7 @@
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center"
                            Text="{x:Bind UserCenterVM.UserName,Mode=OneWay}"
-                           Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
+                           Foreground="{ThemeResource ButtonForegroundThemeBrush}"
                            FontSize="18" 
                            />
             </Grid>
@@ -131,7 +131,8 @@
                     <Button x:Name="PublishBtn"     
                             HorizontalContentAlignment="Stretch" 
                             Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
-                            Padding="0,12">
+                            Padding="0,12"
+                            Command="{x:Bind UserCenterVM.MyPublishCommand}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -143,7 +144,7 @@
                                    FontFamily="Segoe MDL2 Assets"
                                    Text="&#xEA54;"
                                    FontSize="35"/>
-                            <TextBlock Grid.Row="1" Text="我的发表" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Text="我发表的" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Path Grid.Column="1" Data="M20,14H4V10H20" Stretch="Fill" Width="1" Fill="Gray" Opacity="0.2"/>
@@ -151,7 +152,8 @@
                             Grid.Column="2"
                             HorizontalContentAlignment="Stretch" 
                             Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
-                            Padding="0,12">
+                            Padding="0,12"
+                            Command="{x:Bind UserCenterVM.MyParticipateCommand}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -163,7 +165,7 @@
                                    FontFamily="Segoe MDL2 Assets"
                                    Text="&#xE932;"
                                    FontSize="35"/>
-                            <TextBlock Grid.Row="1" Text="我的评论" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Text="我评论的" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Path Grid.Column="3" Data="M20,14H4V10H20" Stretch="Fill" Width="1" Fill="Gray" Opacity="0.2"/>
@@ -171,7 +173,8 @@
                             Grid.Column="4"
                             HorizontalContentAlignment="Stretch" 
                             Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
-                            Padding="0,12">
+                            Padding="0,12"
+                            Command="{x:Bind UserCenterVM.MyCollectionCommand}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -183,7 +186,7 @@
                                    FontFamily="Segoe MDL2 Assets"
                                    Text="&#xE006;"
                                    FontSize="35"/>
-                            <TextBlock Grid.Row="1" Text="我的收藏" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Text="我收藏的" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                 </Grid>

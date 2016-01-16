@@ -1,4 +1,5 @@
-﻿using Joke.Utils;
+﻿using Joke.Models;
+using Joke.Utils;
 using Joke.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,14 +22,14 @@ namespace Joke.UserControls
 {
     public sealed partial class JokePanelControl : UserControl
     {
-        JokeViewModel JokeVM { get; set; }   
+        JokeViewModel JokeVM { get; set; }
 
-        public JokePanelControl(JokeAPI jokeAPI)
+        public JokePanelControl(JokeAPI jokeAPI, LoginInfo loginInfo = null)
         {
             this.InitializeComponent();
 
-            JokeVM = new JokeViewModel(jokeAPI);   
+            JokeVM = new JokeViewModel(jokeAPI, loginInfo);
             this.DataContext = JokeVM;
-        }          
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace Joke.Models
         public T[] items { get; set; }
         public int total { get; set; }
         public int page { get; set; }
+
+        public string err_msg { get; set; }
         public int err { get; set; }
     }
 

@@ -68,7 +68,7 @@ namespace Joke.ViewModels
         }
 
         #endregion
-                       
+
         #region Command
 
         RelayCommand refreshCommand { get; set; }
@@ -132,7 +132,13 @@ namespace Joke.ViewModels
                async (pageIndex, requestCount) =>
                {
                    IsBusy = true;
-                   JokeResponse<Comment> tempJokeResponse = await JokeAPIUtils.GetJokeInfoList<Comment>(jokeAPI, pageIndex, requestCount, jokeID);
+                   JokeResponse<Comment> tempJokeResponse = await JokeAPIUtils.GetJokeInfoList<Comment>(new RequestParam
+                   {
+                       jokeAPI = jokeAPI,
+                       page = pageIndex,
+                       count = requestCount,
+                       args = new string[] { jokeID }
+                   });
                    IsBusy = false;
 
                    return tempJokeResponse;

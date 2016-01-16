@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Joke.Models
-{ 
+{
     public class Votes
     {
         public int up { get; set; }
@@ -29,7 +29,7 @@ namespace Joke.Models
     }
 
     public class JokeInfo : ViewModelBase
-    {    
+    {
         //public  
         public string id { get; set; }
         public long created_at { get; set; }
@@ -38,6 +38,7 @@ namespace Joke.Models
         public string content { get; set; }
         public string tag { get; set; }
         public int comments_count { get; set; }
+        public bool is_mine { get; set; }
         public User user { get; set; }
         public string image { get; set; }
         public ImageSize image_size { get; set; }
@@ -148,12 +149,12 @@ namespace Joke.Models
 
         #region No Joke Property
 
-        private bool? _IsPlaying; 
+        private bool? _IsPlaying;
         public bool? IsPlaying
         {
             get { return _IsPlaying; }
             set { _IsPlaying = value; RaisePropertyChanged("IsPlaying"); }
-        } 
+        }
 
         #endregion
 
@@ -168,10 +169,10 @@ namespace Joke.Models
                     commentCommand = new RelayCommand(() =>
                     {
                         Frame rootFrame = Window.Current.Content as Frame;
-                        if(rootFrame!=null)
+                        if (rootFrame != null)
                         {
                             rootFrame.Navigate(typeof(CommentPage), this);
-                        } 
+                        }
                     });
 
                 return commentCommand;
@@ -231,7 +232,7 @@ namespace Joke.Models
                             m.Play();
                             IsPlaying = true;
                         }
-                            
+
 
                         System.Diagnostics.Debug.WriteLine("Play the joke...");
                     });
@@ -241,5 +242,5 @@ namespace Joke.Models
         }
 
         #endregion 
-    } 
+    }
 }

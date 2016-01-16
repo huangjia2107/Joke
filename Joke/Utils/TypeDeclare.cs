@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Joke.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,9 @@ namespace Joke.Utils
 
         Signin, //登录
         Comment,//评论
+        Publish, //我的发表
+        Participate,  //我的参与
+        Collection,//我的收藏
 
     }
 
@@ -43,5 +47,23 @@ namespace Joke.Utils
         public LoadStatus Status { get; set; }
         public int ResponseTotalCount { get; set; }
         public int RealTotalCount { get; set; }
+    }
+
+    public class RequestParam
+    {
+        public JokeAPI jokeAPI { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public uint page { get; set; } = 1;
+        public uint count { get; set; } = 20;
+        public string token { get; set; }
+        public RequestMethod method { get; set; } = RequestMethod.GET;
+        public string[] args { get; set; }
+    }
+
+    public class UserCenterParam
+    {
+        public JokeAPI jokeAPI { get; set; }
+        public LoginInfo loginInfo { get; set; } = new LoginInfo();
     }
 }

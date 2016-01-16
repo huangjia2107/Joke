@@ -167,6 +167,9 @@
     <Compile Include="Views\UserCenterPage.xaml.cs">
       <DependentUpon>UserCenterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserJokePage.xaml.cs">
+      <DependentUpon>UserJokePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -265,6 +268,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserCenterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserJokePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

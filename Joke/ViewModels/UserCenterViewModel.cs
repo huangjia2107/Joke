@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Joke.Models;
 using Joke.Utils;
+using Joke.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Joke.ViewModels
 {
@@ -155,16 +157,76 @@ namespace Joke.ViewModels
                         if (UserLoginInfo != null)
                             UserLoginInfo = new LoginInfo();
 
-                    }, CanQuitExecute);
+                    });
 
                 return quitBtnCommand;
             }
         }
 
-        bool CanQuitExecute()
+        RelayCommand myPublishCommand { get; set; }
+        public ICommand MyPublishCommand
         {
-            return true;
+            get
+            {
+                if (myPublishCommand == null)
+                    myPublishCommand = new RelayCommand(() =>
+                    {
+                        GoToUserJokePage(JokeAPI.Publish);
+                    });
+
+                return myPublishCommand;
+            }
         }
+
+        RelayCommand myParticipateCommand { get; set; }
+        public ICommand MyParticipateCommand
+        {
+            get
+            {
+                if (myParticipateCommand == null)
+                    myParticipateCommand = new RelayCommand(() =>
+                    {
+                        GoToUserJokePage(JokeAPI.Participate);
+                    });
+
+                return myParticipateCommand;
+            }
+        }
+
+        RelayCommand myCollectionCommand { get; set; }
+        public ICommand MyCollectionCommand
+        {
+            get
+            {
+                if (myCollectionCommand == null)
+                    myCollectionCommand = new RelayCommand(() =>
+                    {
+                        GoToUserJokePage(JokeAPI.Collection);
+                    });
+
+                return myCollectionCommand;
+            }
+        }
+
+        #endregion
+
+        #region Func
+
+        private void GoToUserJokePage(JokeAPI jokeAPI)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null)
+            {
+                rootFrame.Navigate(
+                    typeof(UserJokePage),
+                    new UserCenterParam
+                    {
+                        jokeAPI = jokeAPI,
+                        loginInfo = UserLoginInfo
+                    });
+            }
+        }
+
         #endregion
     }
 }

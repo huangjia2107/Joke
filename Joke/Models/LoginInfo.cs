@@ -16,27 +16,15 @@ namespace Joke.Models
 
     public class UserData
     {
-        public UserData()
-        {
-            articles = new Artical();
-        }
-
-        public Artical articles { get; set; }
+        public Artical articles { get; set; } = new Artical();
     }
 
     public class LoginInfo
     {
-        public LoginInfo()
-        {
-            userdata = new UserData();
-            user = new User();
-            err = -1;
-        }
-
-        public UserData userdata { get; set; }
+        public UserData userdata { get; set; } = new UserData();
         public string token { get; set; }
-        public User user { get; set; }
-        public int err { get; set; }
+        public User user { get; set; } = new User();
+        public int err { get; set; } = -1;
 
         public string userid { get; set; }
         public string userpassword { get; set; }

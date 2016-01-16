@@ -15,9 +15,10 @@ namespace Joke.ViewModels
 {
     public class JokeViewModel : ViewModelBase
     {
-        public JokeViewModel(JokeAPI jokeAPI)
+        public JokeViewModel(JokeAPI jokeAPI, LoginInfo loginInfo = null)
         {
             JokeAPI = jokeAPI;
+            UserLoginInfo = loginInfo;
 
             Title = HashMap.JokeTitleMap[jokeAPI];
             LoadJokeInfoCollection(jokeAPI);
@@ -26,6 +27,7 @@ namespace Joke.ViewModels
         #region Property
 
         public JokeAPI JokeAPI { get; set; }
+        public LoginInfo UserLoginInfo { get; set; }
 
         private bool _IsDisConnected;
         public bool IsDisConnected
@@ -72,7 +74,13 @@ namespace Joke.ViewModels
                async (pageIndex, requestCount) =>
                {
                    IsBusy = !IsDisConnected;
-                   JokeResponse<JokeInfo> tempJokeResponse = await JokeAPIUtils.GetJokeInfoList<JokeInfo>(jokeAPI, pageIndex, requestCount);
+                   JokeResponse<JokeInfo> tempJokeResponse = await JokeAPIUtils.GetJokeInfoList<JokeInfo>(new RequestParam
+                   {
+                       jokeAPI = jokeAPI,
+                       page = pageIndex,
+                       count = requestCount,
+                       token = UserLoginInfo != null ? UserLoginInfo.token : string.Empty
+                   });
                    IsBusy = false;
 
                    return tempJokeResponse;

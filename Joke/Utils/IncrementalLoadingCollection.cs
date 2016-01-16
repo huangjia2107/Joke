@@ -29,7 +29,7 @@ namespace Joke.Utils
         CancellationToken cts;
 
         //参数  
-        uint requestCount = 50;
+        uint requestCount = 20;
         Func<uint, uint, Task<JokeResponse<T>>> funcGetData;
 
         public IncrementalLoadingCollection(Func<uint, uint, Task<JokeResponse<T>>> _funcGetData, uint _requestCount = 20)
@@ -107,7 +107,7 @@ namespace Joke.Utils
                 }
 
                 pageIndex++;
-                _HasMoreItems = (response.count != 0);
+                _HasMoreItems = (response.items.Length != 0);
 
                 if (_HasMoreItems)
                 {

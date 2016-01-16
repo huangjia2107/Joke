@@ -12,38 +12,24 @@ namespace Joke.Utils
 {
     public class JokeAPIUtils
     {
-        public async static Task<JokeResponse<T>> GetJokeInfoList<T>(JokeAPI jokeAPI, uint page = 1, uint count = 50, params string[] args)
+        public async static Task<JokeResponse<T>> GetJokeInfoList<T>(RequestParam requestParam)
         {
-            JokeResponse<T> jokeResponse = null;
-            string param = "page=" + page + "&count=" + count;
-            string apiUrl = args != null ? string.Format(HashMap.JokeAPIMap[jokeAPI], args) : HashMap.JokeAPIMap[jokeAPI];
-
-            switch (jokeAPI)
-            {
-                case JokeAPI.Signin:
-                    break;
-                default:
-                    jokeResponse = await GetObjResult<JokeResponse<T>>(apiUrl, param);
-                    break;
-            }
-
-            return jokeResponse;
+            return await GetObjResult<JokeResponse<T>>(requestParam);
         }
 
         public async static Task<LoginInfo> GetLoginInfo(string loginName, string loginPass)
         {
             LoginInfo loginInfo = null;
-            string param = "{\"login\":\"" + loginName + "\",\"pass\":\"" + loginPass + "\"}";
+            
 
-            loginInfo = await GetObjResult<LoginInfo>(HashMap.JokeAPIMap[JokeAPI.Signin], param, RequestMethod.POST);
-            return loginInfo;
+            return await GetObjResult<LoginInfo>(new RequestParam {jokeAPI= JokeAPI.Signin, username = loginName, password = loginPass, method = RequestMethod.POST });
         }
 
 
-        public async static Task<T> GetObjResult<T>(string apiUrl, string param, RequestMethod method = RequestMethod.GET)
+        public async static Task<T> GetObjResult<T>(RequestParam requestParam)
         {
             //请求并获取返回的json串，截取符合json解析公共方法的部分。
-            string str_json = await GetJsonString(apiUrl, param, method);
+            string str_json = await GetJsonString(requestParam);
 
             if (string.IsNullOrEmpty(str_json))
                 return default(T);
@@ -61,18 +47,18 @@ namespace Joke.Utils
             return requestResult;
         }
 
-        public async static Task<string> GetJsonString(String apiurl, String paramString, RequestMethod method = RequestMethod.GET)
+        public async static Task<string> GetJsonString(RequestParam requestParam)
         {
-            if (string.IsNullOrEmpty(paramString))
+            if (requestParam == null)
                 return null;
 
             string jsonString = "";
             try
             {
-                if (method == RequestMethod.GET)
-                    jsonString = unicode_js(await GetReponseStringByGet(apiurl, paramString));
+                if (requestParam.method == RequestMethod.GET)
+                    jsonString = unicode_js(await GetReponseStringByGet(requestParam));
                 else
-                    jsonString = unicode_js(await GetReponseStringByPost(apiurl, paramString));
+                    jsonString = unicode_js(await GetReponseStringByPost(requestParam));
             }
             catch
             {
@@ -100,11 +86,35 @@ namespace Joke.Utils
             return outStr;
         }
 
-        private async static Task<string> GetReponseStringByGet(string apiUrl, string param)
+        private async static Task<string> GetReponseStringByGet(RequestParam requestParam)
         {
+            string requestUrl = string.Empty;
+            string param = string.Empty;
+
+            switch (requestParam.jokeAPI)
+            {
+                case JokeAPI.Signin:
+                    param = "{\"login\":\"" + requestParam.username + "\",\"pass\":\"" + requestParam.password + "\"}";
+                    break;
+                case JokeAPI.Comment:
+                    param = "page=" + requestParam.page + "&count=" + requestParam.count;
+                    requestUrl = string.Format(HashMap.JokeAPIMap[requestParam.jokeAPI], requestParam.args) + "?" + param;
+                    break;
+//                 case JokeAPI.Publish:
+//                 case JokeAPI.Participate:
+//                 case JokeAPI.Collection:
+//                 break;
+                default:
+                    param = "page=" + requestParam.page + "&count=" + requestParam.count;
+                    requestUrl = HashMap.JokeAPIMap[requestParam.jokeAPI] + "?" + param;
+                    break;
+            }
+
             string resultStr = "";
-            string requestUrl = apiUrl + "?" + param;
             HttpClient httpClient = new HttpClient();
+
+            if (!string.IsNullOrEmpty(requestParam.token))
+                httpClient.DefaultRequestHeaders.Add("Qbtoken", requestParam.token);
 
             try
             {
@@ -122,10 +132,22 @@ namespace Joke.Utils
             return resultStr;
         }
 
-        private async static Task<string> GetReponseStringByPost(string apiUrl, string param)
-        {
+        private async static Task<string> GetReponseStringByPost(RequestParam requestParam)
+        {                                 
+            string requestUrl = string.Empty;
+            string param = string.Empty;
+
+            switch (requestParam.jokeAPI)
+            {
+                case JokeAPI.Signin:
+                    param = "{\"login\":\"" + requestParam.username + "\",\"pass\":\"" + requestParam.password + "\"}";
+                    requestUrl = HashMap.JokeAPIMap[requestParam.jokeAPI] + "?" + param;
+                    break;
+                default:
+                    return null;
+            }
+
             string resultStr = "";
-            string requestUrl = apiUrl;
             HttpClient httpClient = new HttpClient();
 
             try
