@@ -22,4 +22,10 @@ namespace Joke.Models
         public string err_msg { get; set; } //aaaaaaaaaaaa
         public int err { get; set; }
     }
+
+    public class UserResponse
+    {
+        public UserData userdata { get; set; } = new UserData();
+        public int err { get; set; }
+    }
 }

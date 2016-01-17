@@ -5,15 +5,15 @@
     xmlns:local="using:Joke.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-     xmlns:wux="using:Windows.UI.Xaml" 
     xmlns:utils="using:Joke.Utils"
     xmlns:controls="using:Joke.UserControls"
     xmlns:models="using:Joke.Models"     
     RequestedTheme="{Binding Source={StaticResource appSettings},Converter={StaticResource BTTConverter}, Path=IsDarkTheme, Mode=OneWay}"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <wux:Visibility x:Key="collapsed">Collapsed</wux:Visibility>
+        <Visibility x:Key="collapsed">Collapsed</Visibility>
 
         <utils:StringFormatConverter x:Key="SFConverter" StringFormat="#{0}"/>
         <utils:BoolToVisibilityConverter x:Key="BTVConverter"/>
@@ -120,7 +120,8 @@
                                           FontSize="16"
                                           DataContext="{x:Bind CommentVM.CurrentJokeInfo,Mode=OneWay}"
                                           HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch"/>
+                                          VerticalAlignment="Stretch"
+                                          />
             </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Comment">

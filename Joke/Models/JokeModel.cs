@@ -149,6 +149,8 @@ namespace Joke.Models
 
         #region No Joke Property
 
+        public bool OpenCommentEnabled { get; set; } = true;
+
         private bool? _IsPlaying;
         public bool? IsPlaying
         {
@@ -169,7 +171,7 @@ namespace Joke.Models
                     commentCommand = new RelayCommand(() =>
                     {
                         Frame rootFrame = Window.Current.Content as Frame;
-                        if (rootFrame != null)
+                        if (rootFrame != null && OpenCommentEnabled)
                         {
                             rootFrame.Navigate(typeof(CommentPage), this);
                         }

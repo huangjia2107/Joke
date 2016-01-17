@@ -41,6 +41,8 @@ namespace Joke.ViewModels
                 UserName = value.user.login;
                 UserPic = value.user.real_icon;
 
+                JokeAPIUtils.Usertoken = value.token;
+
                 if (value.err == 0)
                 {
                     LoginGridVisibility = Visibility.Collapsed;
@@ -163,6 +165,26 @@ namespace Joke.ViewModels
             }
         }
 
+        RelayCommand editCommand { get; set; }
+        public ICommand EditCommand
+        {
+            get
+            {
+                if (editCommand == null)
+                    editCommand = new RelayCommand(() =>
+                    {
+                        GoToPage(typeof(UserDetailPage), new UserDetailParam
+                        {
+                            jokeAPI = JokeAPI.UserDetail,
+                            user = UserLoginInfo.user,
+                            token = UserLoginInfo.token
+                        });
+                    });
+
+                return editCommand;
+            }
+        }
+
         RelayCommand myPublishCommand { get; set; }
         public ICommand MyPublishCommand
         {
@@ -171,7 +193,11 @@ namespace Joke.ViewModels
                 if (myPublishCommand == null)
                     myPublishCommand = new RelayCommand(() =>
                     {
-                        GoToUserJokePage(JokeAPI.Publish);
+                        GoToPage(typeof(UserJokePage), new UserCenterParam
+                        {
+                            jokeAPI = JokeAPI.Publish,
+                            loginInfo = UserLoginInfo
+                        });
                     });
 
                 return myPublishCommand;
@@ -186,7 +212,11 @@ namespace Joke.ViewModels
                 if (myParticipateCommand == null)
                     myParticipateCommand = new RelayCommand(() =>
                     {
-                        GoToUserJokePage(JokeAPI.Participate);
+                        GoToPage(typeof(UserJokePage), new UserCenterParam
+                        {
+                            jokeAPI = JokeAPI.Participate,
+                            loginInfo = UserLoginInfo
+                        });
                     });
 
                 return myParticipateCommand;
@@ -201,7 +231,11 @@ namespace Joke.ViewModels
                 if (myCollectionCommand == null)
                     myCollectionCommand = new RelayCommand(() =>
                     {
-                        GoToUserJokePage(JokeAPI.Collection);
+                        GoToPage(typeof(UserJokePage), new UserCenterParam
+                        {
+                            jokeAPI = JokeAPI.Collection,
+                            loginInfo = UserLoginInfo
+                        });
                     });
 
                 return myCollectionCommand;
@@ -212,18 +246,12 @@ namespace Joke.ViewModels
 
         #region Func
 
-        private void GoToUserJokePage(JokeAPI jokeAPI)
+        private void GoToPage(Type pageType, object parameter = null)
         {
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame != null)
             {
-                rootFrame.Navigate(
-                    typeof(UserJokePage),
-                    new UserCenterParam
-                    {
-                        jokeAPI = jokeAPI,
-                        loginInfo = UserLoginInfo
-                    });
+                rootFrame.Navigate(pageType, parameter);
             }
         }
 

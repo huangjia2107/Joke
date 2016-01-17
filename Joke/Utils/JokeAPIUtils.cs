@@ -12,6 +12,8 @@ namespace Joke.Utils
 {
     public class JokeAPIUtils
     {
+        public static string Usertoken { get; set; }
+
         public async static Task<JokeResponse<T>> GetJokeInfoList<T>(RequestParam requestParam)
         {
             return await GetObjResult<JokeResponse<T>>(requestParam);
@@ -19,12 +21,8 @@ namespace Joke.Utils
 
         public async static Task<LoginInfo> GetLoginInfo(string loginName, string loginPass)
         {
-            LoginInfo loginInfo = null;
-            
-
-            return await GetObjResult<LoginInfo>(new RequestParam {jokeAPI= JokeAPI.Signin, username = loginName, password = loginPass, method = RequestMethod.POST });
+            return await GetObjResult<LoginInfo>(new RequestParam { jokeAPI = JokeAPI.Signin, username = loginName, password = loginPass, method = RequestMethod.POST });
         }
-
 
         public async static Task<T> GetObjResult<T>(RequestParam requestParam)
         {
@@ -94,16 +92,14 @@ namespace Joke.Utils
             switch (requestParam.jokeAPI)
             {
                 case JokeAPI.Signin:
-                    param = "{\"login\":\"" + requestParam.username + "\",\"pass\":\"" + requestParam.password + "\"}";
+                    break;
+                case JokeAPI.UserDetail:
+                    requestUrl = string.Format(HashMap.JokeAPIMap[requestParam.jokeAPI], requestParam.args);
                     break;
                 case JokeAPI.Comment:
                     param = "page=" + requestParam.page + "&count=" + requestParam.count;
                     requestUrl = string.Format(HashMap.JokeAPIMap[requestParam.jokeAPI], requestParam.args) + "?" + param;
                     break;
-//                 case JokeAPI.Publish:
-//                 case JokeAPI.Participate:
-//                 case JokeAPI.Collection:
-//                 break;
                 default:
                     param = "page=" + requestParam.page + "&count=" + requestParam.count;
                     requestUrl = HashMap.JokeAPIMap[requestParam.jokeAPI] + "?" + param;
@@ -133,7 +129,7 @@ namespace Joke.Utils
         }
 
         private async static Task<string> GetReponseStringByPost(RequestParam requestParam)
-        {                                 
+        {
             string requestUrl = string.Empty;
             string param = string.Empty;
 

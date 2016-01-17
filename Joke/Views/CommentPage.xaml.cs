@@ -75,17 +75,24 @@ namespace Joke.Views
             if (ApiInformation.IsTypePresent(PlatformAPIHelper.HardwareButtonsAPI))
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtons_BackPressed;
 
-            if (CommentVM == null)
-                return;
-
-            CommentVM.CurrentJokeInfo = e.Parameter as JokeInfo;
+            JokeInfo jokeInfo = e.Parameter as JokeInfo;
+            if (CommentVM != null && jokeInfo!=null)
+            {
+                jokeInfo.OpenCommentEnabled = false;
+                CommentVM.CurrentJokeInfo = jokeInfo ;
+            }
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
             //Frame.Navigate(typeof(MainPage), CommentVM.CurrentJokeInfo.id);
             if (this.Frame.CanGoBack)
+            {
+                if (CommentVM != null)
+                    CommentVM.CurrentJokeInfo.OpenCommentEnabled = true;
                 this.Frame.GoBack();
+            }
+                
         }
 
         private void MsgVisibleStoryboard_Completed(object sender, object e)

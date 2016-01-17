@@ -72,7 +72,7 @@ namespace Joke.Models
             get { return _created_at; }
             set
             {
-                _created_at = !Regex.IsMatch(value, @"^[0-9]+$") ? value : Algorithm.GetRealTime(long.Parse(value)).ToString("yyyy-MM-dd HH:mm");
+                _created_at = !Regex.IsMatch(value, @"^[0-9]+$") ? value : Algorithm.GetRealTime(long.Parse(value)).ToString("yyyy-MM-dd");
                 RaisePropertyChanged("created_at");
             }
         }
@@ -97,7 +97,7 @@ namespace Joke.Models
                 _real_icon = @"ms-Appx:///Assets/Images/void.png";
             else
             {
-                _real_icon = string.Format("http://img.qiushibaike.com/system/avtnew/{0}/{1}/thumb/{2}", id.Substring(0, id.Length - 4), _id, _icon);
+                _real_icon = string.Format("http://img.qiushibaike.com/system/avtnew/{0}/{1}/thumb/{2}", _id.Substring(0, _id.Length - 4), _id, _icon);
 
                 RaisePropertyChanged("real_icon");
             }

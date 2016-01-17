@@ -34,7 +34,7 @@ namespace Joke.UserControls
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(50);
             timer.Tick += timer_Tick;
-        }
+        }    
 
         private void timer_Tick(object sender, object e)
         {

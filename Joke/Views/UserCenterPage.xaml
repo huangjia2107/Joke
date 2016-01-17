@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     RequestedTheme="{Binding Source={StaticResource appSettings},Converter={StaticResource BTTConverter}, Path=IsDarkTheme, Mode=OneWay}"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource AppBackgroundThemeBrush}">
@@ -95,23 +96,35 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Ellipse Height="100" Width="100" Margin="0,25,0,10">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="ms-Appx:///Assets/Images/void.png"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Ellipse Height="100" Width="100" Margin="0,25,0,10">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="{x:Bind UserCenterVM.UserPic,Mode=OneWay}"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <TextBlock Grid.Row="1"
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"
-                           Text="{x:Bind UserCenterVM.UserName,Mode=OneWay}"
-                           Foreground="{ThemeResource ButtonForegroundThemeBrush}"
-                           FontSize="18" 
-                           />
+                <Button Height="100" 
+                        Width="100" 
+                        Margin="0,25,0,10"
+                        VerticalContentAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch" 
+                        Style="{StaticResource BgButtonStyle}" 
+                        Background="Transparent"  
+                        Command="{x:Bind UserCenterVM.EditCommand}">
+                    <Grid>
+                        <Ellipse Stroke="White" StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="ms-Appx:///Assets/Images/void.png"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse Stroke="White" StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{x:Bind UserCenterVM.UserPic,Mode=OneWay}"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="1"                           
+                        Style="{StaticResource BgButtonStyle}" 
+                        Background="{x:Null}" 
+                        FontSize="18"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"
+                        Content="{x:Bind UserCenterVM.UserName,Mode=OneWay}"
+                        Command="{x:Bind UserCenterVM.EditCommand}"/>
             </Grid>
             <Grid Grid.Row="1" Margin="0,35,0,0">
                 <Grid.RowDefinitions>
@@ -267,7 +280,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Image Source="ms-Appx:///Assets/Images/logo.png" Width="100" Margin="0,40"/>
+            <Image Source="ms-Appx:///Assets/Images/logo_word.png" Width="100" Margin="0,40"/>
             <Grid Grid.Row="1" Margin="10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>

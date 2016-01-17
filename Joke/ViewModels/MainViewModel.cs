@@ -34,6 +34,8 @@ namespace Joke.ViewModels
 
         private void Init()
         {
+            IsBusy = true;
+            UserName = "正在登录...";
             IAsyncAction asyncAction = ThreadPool.RunAsync(async (workItem) =>
             {
 
@@ -42,12 +44,12 @@ namespace Joke.ViewModels
 //                 if (Algorithm.IsNetworkValid() == false)
 //                     return;
 
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                         new DispatchedHandler(() =>
-                         {
-                             IsBusy = true;
-                             UserName = "正在登录...";
-                         }));
+//                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+//                          new DispatchedHandler(() =>
+//                          {
+//                              IsBusy = true;
+//                              UserName = "正在登录...";
+//                          }));
 
                 IReadOnlyList<PasswordCredential> pcList = FileHelper.RetrieveAllCredential();
                 if (pcList != null)
@@ -56,7 +58,7 @@ namespace Joke.ViewModels
                     LoginInfo resultInfo = await JokeAPIUtils.GetLoginInfo(pcList[0].UserName, pcList[0].Password);
                     if (resultInfo != null)
                     {
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
                             new DispatchedHandler(() =>
                         {
                             if (resultInfo.err == 0)
@@ -82,15 +84,12 @@ namespace Joke.ViewModels
             });
 
             m_workItem = asyncAction;
-            asyncAction.Completed = new AsyncActionCompletedHandler(async (IAsyncAction asyncInfo, AsyncStatus asyncStatus) =>
+            asyncAction.Completed = new AsyncActionCompletedHandler((IAsyncAction asyncInfo, AsyncStatus asyncStatus) =>
             {
-                if (asyncStatus == AsyncStatus.Canceled)
-                    return;
+//                 if (asyncStatus == AsyncStatus.Canceled)
+//                     return;  
 
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
-                 {
-                     IsBusy = false;
-                 }));
+                IsBusy = false;
             });
         }
 
@@ -106,6 +105,8 @@ namespace Joke.ViewModels
 
                 UserName = value.user.login;
                 UserPic = value.user.real_icon;
+
+                JokeAPIUtils.Usertoken = value.token;
             }
         }
 

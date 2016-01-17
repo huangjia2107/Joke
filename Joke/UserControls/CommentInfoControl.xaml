@@ -27,18 +27,26 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Grid.Row="0">
-                <Ellipse Height="35" Width="35">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="ms-Appx:///Assets/Images/missing.jpg"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-                <Ellipse Height="35" Width="35">
-                    <Ellipse.Fill>
-                        <ImageBrush ImageSource="{x:Bind Comment.user.real_icon}"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-            </Grid>
+            <Button  Height="35" Width="35" 
+                     VerticalContentAlignment="Stretch"
+                     HorizontalContentAlignment="Stretch" 
+                     Style="{StaticResource BgButtonStyle}" 
+                     Background="Transparent" 
+                     Command="{x:Bind Comment.UserDetailCommand}"
+                     >
+                <Grid>
+                    <Ellipse>
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="ms-Appx:///Assets/Images/missing.jpg"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Ellipse>
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{x:Bind Comment.user.real_icon}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Grid>
+            </Button>     
             <Grid Grid.Column="1" Grid.Row="0" Padding="5,0">
                 <TextBlock Text="{x:Bind Comment.user.login}" 
                            Foreground="#FFA015" 

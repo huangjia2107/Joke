@@ -22,6 +22,8 @@ namespace Joke.Utils
         Participate,  //我的参与
         Collection,//我的收藏
 
+        UserDetail
+
     }
 
     public enum RequestMethod
@@ -65,5 +67,13 @@ namespace Joke.Utils
     {
         public JokeAPI jokeAPI { get; set; }
         public LoginInfo loginInfo { get; set; } = new LoginInfo();
+    }
+
+    public class UserDetailParam
+    {
+        public JokeAPI jokeAPI { get; set; }
+        public string token { get; set; }
+        public User user { get; set; } = new User();
+        public bool IsMine { get; set; } = true;
     }
 }
