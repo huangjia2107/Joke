@@ -50,5 +50,15 @@ namespace Joke.Utils
             {RequestCharset.CHARSET_UTF8,        "UTF-8" },
             {RequestCharset.CHARSET_GB2312,      "GB2312" }
         };
+
+        public static Dictionary<RequestHeader, string> RequestHeaderMap = new Dictionary<RequestHeader, string>()
+        {
+            {RequestHeader.AcceptEncoding,          "gzip,deflate" },
+            {RequestHeader.UserAgent,               "QiuBai/1.0.0 (Windows; Windows 10.0.0; zh_CN) PLHttpClient/1_WIFI" },
+            {RequestHeader.CacheControl,            "no-cache" },
+            {RequestHeader.Accept,                  "*/*" },
+            {RequestHeader.Uuid,                    "windows_"+Guid.NewGuid().ToString("N") },
+            {RequestHeader.Source,                  "windows_1.0.0" }
+        };
     }
 }

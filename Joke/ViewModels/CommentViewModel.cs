@@ -142,7 +142,11 @@ namespace Joke.ViewModels
                    IsBusy = false;
 
                    return tempJokeResponse;
-               });
+               },
+                (comment) =>
+                {
+                    return CommentCollection.FirstOrDefault(c => c.id == comment.id) != null;
+                });
 
             _CommentCollection.OnLoadStatusChanged += _JokeInfoCollection_OnLoadStatusChanged;
             _CommentCollection.OnNetworkStatusChanged += _JokeInfoCollection_OnNetworkStatusChanged;

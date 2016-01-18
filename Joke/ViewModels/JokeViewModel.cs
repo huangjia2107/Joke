@@ -84,6 +84,10 @@ namespace Joke.ViewModels
                    IsBusy = false;
 
                    return tempJokeResponse;
+               },
+               (jokeInfo) =>
+               {
+                   return JokeInfoCollection.FirstOrDefault(joke => joke.id == jokeInfo.id) != null;
                });
 
             _JokeInfoCollection.OnLoadStatusChanged += _JokeInfoCollection_OnLoadStatusChanged;

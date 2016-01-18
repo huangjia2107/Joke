@@ -31,10 +31,12 @@ namespace Joke.Utils
         //参数  
         uint requestCount = 20;
         Func<uint, uint, Task<JokeResponse<T>>> funcGetData;
+        Func<T, bool> funcIsExist;
 
-        public IncrementalLoadingCollection(Func<uint, uint, Task<JokeResponse<T>>> _funcGetData, uint _requestCount = 20)
+        public IncrementalLoadingCollection(Func<uint, uint, Task<JokeResponse<T>>> _funcGetData, Func<T, bool> _funcIsExist, uint _requestCount = 20)
         {
             funcGetData = _funcGetData;
+            funcIsExist = _funcIsExist;
             requestCount = _requestCount;
         }
 
@@ -111,7 +113,7 @@ namespace Joke.Utils
 
                 if (_HasMoreItems)
                 {
-                    this.AddItems(response.items.ToList<T>());
+                    this.AddItems(response.items.ToList<T>(), funcIsExist);
                     responseCount += response.count;
                 }
 
@@ -144,13 +146,14 @@ namespace Joke.Utils
             }
         }
 
-        private void AddItems(List<T> items)
+        private void AddItems(List<T> items, Func<T, bool> _funcIsExist)
         {
             if (items != null)
             {
                 foreach (var item in items)
                 {
-                    this.Add(item);
+                    if (!_funcIsExist(item))
+                        this.Add(item);
                 }
             }
         }

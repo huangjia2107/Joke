@@ -44,6 +44,16 @@ namespace Joke.Utils
         Finish
     }
 
+    public enum RequestHeader
+    {
+        AcceptEncoding,
+        UserAgent,
+        CacheControl,
+        Accept,
+        Uuid,
+        Source
+    }
+
     public class LoadStatusArgs
     {
         public LoadStatus Status { get; set; }
