@@ -110,15 +110,14 @@ namespace Joke.Utils
             HttpClient httpClient = new HttpClient();
 
             if (!string.IsNullOrEmpty(requestParam.token))
-            {
                 httpClient.DefaultRequestHeaders.Add("Qbtoken", requestParam.token);
-                httpClient.DefaultRequestHeaders.Add("Accept-Encoding", HashMap.RequestHeaderMap[RequestHeader.AcceptEncoding]); 
-                httpClient.DefaultRequestHeaders.Add("UserAgent", HashMap.RequestHeaderMap[RequestHeader.UserAgent]);
-                httpClient.DefaultRequestHeaders.Add("Cache-Control", HashMap.RequestHeaderMap[RequestHeader.CacheControl]);
-                httpClient.DefaultRequestHeaders.Add("Accept", HashMap.RequestHeaderMap[RequestHeader.Accept]);
-                httpClient.DefaultRequestHeaders.Add("Uuid", HashMap.RequestHeaderMap[RequestHeader.Uuid]);
-                httpClient.DefaultRequestHeaders.Add("Source", HashMap.RequestHeaderMap[RequestHeader.Source]);
-            }
+
+            httpClient.DefaultRequestHeaders.Add("Accept-Encoding", HashMap.RequestHeaderMap[RequestHeader.AcceptEncoding]);
+            httpClient.DefaultRequestHeaders.Add("UserAgent", HashMap.RequestHeaderMap[RequestHeader.UserAgent]);
+            httpClient.DefaultRequestHeaders.Add("Cache-Control", HashMap.RequestHeaderMap[RequestHeader.CacheControl]);
+            httpClient.DefaultRequestHeaders.Add("Accept", HashMap.RequestHeaderMap[RequestHeader.Accept]);
+            httpClient.DefaultRequestHeaders.Add("Uuid", HashMap.RequestHeaderMap[RequestHeader.Uuid]);
+            httpClient.DefaultRequestHeaders.Add("Source", HashMap.RequestHeaderMap[RequestHeader.Source]);
 
             try
             {

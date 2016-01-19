@@ -54,7 +54,7 @@ namespace Joke.Utils
         public static Dictionary<RequestHeader, string> RequestHeaderMap = new Dictionary<RequestHeader, string>()
         {
             {RequestHeader.AcceptEncoding,          "gzip,deflate" },
-            {RequestHeader.UserAgent,               "QiuBai/1.0.0 (Windows; Windows 10.0.0; zh_CN) PLHttpClient/1_WIFI" },
+            {RequestHeader.UserAgent,               "QiuBai/1.0.0 (Windows; Windows 10; zh_CN) PLHttpClient/1_WIFI" },
             {RequestHeader.CacheControl,            "no-cache" },
             {RequestHeader.Accept,                  "*/*" },
             {RequestHeader.Uuid,                    "windows_"+Guid.NewGuid().ToString("N") },

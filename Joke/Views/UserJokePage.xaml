@@ -5,9 +5,11 @@
     xmlns:local="using:Joke.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    RequestedTheme="{Binding Source={StaticResource appSettings},Converter={StaticResource BTTConverter}, Path=IsDarkTheme, Mode=OneWay}"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Grid x:Name="rootGrid">
+    <Grid x:Name="rootGrid" Background="{ThemeResource AppBackgroundThemeBrush}">
         <Button x:Name="BackBtn" 
                 Height="48" 
                 Width="48"  

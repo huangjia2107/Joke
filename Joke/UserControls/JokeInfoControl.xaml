@@ -51,12 +51,12 @@
         </Storyboard>
     </UserControl.Resources>
 
-    <Border Padding="10,7" Margin="0,2.5,0,0" Background="{ThemeResource ListViewItemBackgroundThemeBrush}">
+    <Border Padding="10,7,10,0" Margin="0,2.5,0,0" Background="{ThemeResource ListViewItemBackgroundThemeBrush}">
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="15"/>
+                <RowDefinition Height="10"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Margin="0,0,0,5">
@@ -150,6 +150,8 @@
                     <TextBlock Text="{x:Bind JokeInfo.loop}"  Foreground="Gray"  FontSize="14" Visibility="{x:Bind JokeInfo.IsExistVideo,Converter={StaticResource BTVConverter}}" VerticalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
+            <Path Grid.Row="2" Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Gray" Opacity="0.2" VerticalAlignment="Bottom"/>
+            <!--
             <Path Grid.Row="2" Data="M20,14H4V10H20" Stretch="Fill" Height="2">
                 <Path.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="8,0" MappingMode="Absolute" SpreadMethod="Repeat">
@@ -160,7 +162,8 @@
                     </LinearGradientBrush>
                 </Path.Fill>
             </Path>
-            <Grid Grid.Row="3" Height="35" >
+            -->
+            <Grid Grid.Row="3" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="15"/>
@@ -168,19 +171,19 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Padding="4" Command="{x:Bind JokeInfo.UpCommand}">
+                <Button Padding="8,5" Command="{x:Bind JokeInfo.UpCommand}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#x263A;" FontFamily="Segoe UI Emoji" FontSize="25" Margin="0,0,0,1" Foreground="#007ACC" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Bind JokeInfo.votes.up,Converter={StaticResource SFConverter}}" FontSize="16" Margin="5,0,0,0" Foreground="#007ACC" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="2" Padding="4" Command="{x:Bind JokeInfo.DownCommand}">
+                <Button Grid.Column="2" Padding="8,5" Command="{x:Bind JokeInfo.DownCommand}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#x2639;" FontFamily="Segoe UI Emoji" FontSize="25" Margin="0,0,0,1" Foreground="#007ACC" VerticalAlignment="Center"/>
                         <TextBlock Text="{x:Bind JokeInfo.votes.down,Converter={StaticResource SFConverter}}" FontSize="16" Margin="5,0,0,0" Foreground="#007ACC" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="4" Padding="5" Command="{x:Bind JokeInfo.CommentCommand}">
+                <Button Grid.Column="4" Padding="8,5" Command="{x:Bind JokeInfo.CommentCommand}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE206;" FontFamily="Segoe MDL2 Assets" Margin="0,4,0,0" FontSize="22" Foreground="#007ACC"/>
                         <TextBlock Text="{x:Bind JokeInfo.comments_count,Converter={StaticResource SFConverter}}" FontSize="16" Margin="5,0,0,0" Foreground="#007ACC" VerticalAlignment="Center"/>
