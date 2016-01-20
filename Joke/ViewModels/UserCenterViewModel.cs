@@ -173,7 +173,7 @@ namespace Joke.ViewModels
                 if (editCommand == null)
                     editCommand = new RelayCommand(() =>
                     {
-                        GoToPage(typeof(UserDetailPage), new UserDetailParam
+                        Algorithm.GoToPage(typeof(UserDetailPage), new UserDetailParam
                         {
                             jokeAPI = JokeAPI.UserDetail,
                             user = UserLoginInfo.user,
@@ -193,7 +193,7 @@ namespace Joke.ViewModels
                 if (myPublishCommand == null)
                     myPublishCommand = new RelayCommand(() =>
                     {
-                        GoToPage(typeof(UserJokePage), new UserCenterParam
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
                         {
                             jokeAPI = JokeAPI.Publish,
                             loginInfo = UserLoginInfo
@@ -212,7 +212,7 @@ namespace Joke.ViewModels
                 if (myParticipateCommand == null)
                     myParticipateCommand = new RelayCommand(() =>
                     {
-                        GoToPage(typeof(UserJokePage), new UserCenterParam
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
                         {
                             jokeAPI = JokeAPI.Participate,
                             loginInfo = UserLoginInfo
@@ -231,7 +231,7 @@ namespace Joke.ViewModels
                 if (myCollectionCommand == null)
                     myCollectionCommand = new RelayCommand(() =>
                     {
-                        GoToPage(typeof(UserJokePage), new UserCenterParam
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
                         {
                             jokeAPI = JokeAPI.Collection,
                             loginInfo = UserLoginInfo
@@ -246,14 +246,7 @@ namespace Joke.ViewModels
 
         #region Func
 
-        private void GoToPage(Type pageType, object parameter = null)
-        {
-            Frame rootFrame = Window.Current.Content as Frame;
-            if (rootFrame != null)
-            {
-                rootFrame.Navigate(pageType, parameter);
-            }
-        }
+         
 
         #endregion
     }

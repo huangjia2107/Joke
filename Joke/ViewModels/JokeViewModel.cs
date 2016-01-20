@@ -20,6 +20,7 @@ namespace Joke.ViewModels
             JokeAPI = jokeAPI;
             UserLoginInfo = loginInfo;
 
+            _PageIndex = 1;
             Title = HashMap.JokeTitleMap[jokeAPI];
             LoadJokeInfoCollection(jokeAPI);
         }
@@ -50,6 +51,13 @@ namespace Joke.ViewModels
             set { _Title = value; RaisePropertyChanged("Title"); }
         }
 
+        private uint _PageIndex;
+        public uint PageIndex
+        {
+            get { return _PageIndex; }
+            set { _PageIndex = value; RaisePropertyChanged("PageIndex"); }
+        }
+
         private IncrementalLoadingCollection<JokeInfo> _JokeInfoCollection;
         public IncrementalLoadingCollection<JokeInfo> JokeInfoCollection
         {
@@ -74,6 +82,7 @@ namespace Joke.ViewModels
                async (pageIndex, requestCount) =>
                {
                    IsBusy = !IsDisConnected;
+                   PageIndex = pageIndex;
                    JokeResponse<JokeInfo> tempJokeResponse = await JokeAPIUtils.GetJokeInfoList<JokeInfo>(new RequestParam
                    {
                        jokeAPI = jokeAPI,

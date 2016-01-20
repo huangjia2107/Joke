@@ -21,8 +21,8 @@
                     <!--Button-->
                     <SolidColorBrush x:Key="ButtonBackgroundThemeBrush" Color="#E6E6E6"/>
                     <SolidColorBrush x:Key="ButtonForegroundThemeBrush" Color="Black"/>
-                    <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrush" Color="#FFF1F1F1"/>
-                    <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrush" Color="#FFE6E6E6"/>
+                    <SolidColorBrush x:Key="ButtonPointerOverBackgroundThemeBrush" Color="#FFCFCFCF"/>
+                    <SolidColorBrush x:Key="ButtonPressedBackgroundThemeBrush" Color="#FFB8B8B8"/>
                     <SolidColorBrush x:Key="ButtonDisabledForegroundThemeBrush" Color="#FF808080"/>
 
                     <SolidColorBrush x:Key="ApplicationBarBackgroundThemeBrush" Color="#E6E6E6"/>

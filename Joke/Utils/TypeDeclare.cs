@@ -22,8 +22,9 @@ namespace Joke.Utils
         Participate,  //我的参与
         Collection,//我的收藏
 
-        UserDetail
-
+        UserDetail,
+        UserPublish,
+        UserParticipate
     }
 
     public enum RequestMethod

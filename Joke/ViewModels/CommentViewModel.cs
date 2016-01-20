@@ -16,6 +16,11 @@ namespace Joke.ViewModels
 {
     public class CommentViewModel : ViewModelBase
     {
+        public CommentViewModel()
+        {
+            _PageIndex = 1;
+        }
+
         #region Property
 
         private bool _IsDisConnected;
@@ -37,6 +42,13 @@ namespace Joke.ViewModels
         {
             get { return _Title; }
             set { _Title = value; RaisePropertyChanged("Title"); }
+        }
+
+        private uint _PageIndex;
+        public uint PageIndex
+        {
+            get { return _PageIndex; }
+            set { _PageIndex = value; RaisePropertyChanged("PageIndex"); }
         }
 
         private JokeInfo _CurrentJokeInfo;
@@ -131,7 +143,8 @@ namespace Joke.ViewModels
             CommentCollection = new IncrementalLoadingCollection<Comment>(
                async (pageIndex, requestCount) =>
                {
-                   IsBusy = true;
+                   IsBusy = !IsDisConnected;
+                   PageIndex = pageIndex;
                    JokeResponse<Comment> tempJokeResponse = await JokeAPIUtils.GetJokeInfoList<Comment>(new RequestParam
                    {
                        jokeAPI = jokeAPI,

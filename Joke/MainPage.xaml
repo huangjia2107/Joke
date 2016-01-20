@@ -104,7 +104,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                     <StackPanel Grid.Row="2">
-                        <Path  Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Black" Opacity="0.5"/>
+                        <Path  Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Gray" Opacity="0.2"/>
                         <Button x:Name="MineBtn" 
                                 Height="48"         
                                 HorizontalContentAlignment="Stretch" 

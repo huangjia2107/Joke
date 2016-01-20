@@ -40,6 +40,7 @@
                     <VisualState.Setters>
                         <Setter Target="TopOperationBtn.Visibility" Value="Visible"/>
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="PageTextBlock.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="MiddleState">
@@ -49,6 +50,7 @@
                     <VisualState.Setters>
                         <Setter Target="TopOperationBtn.Visibility" Value="Visible"/>
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="PageTextBlock.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NarrowState">
@@ -58,6 +60,7 @@
                     <VisualState.Setters>
                         <Setter Target="TopOperationBtn.Visibility" Value="Collapsed"/>
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="PageTextBlock.Visibility" Value="Visible"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -67,7 +70,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <RelativePanel x:Name="TopBarPanel" Background="{x:Bind BottomCommandBar.Background,Mode=OneWay}">
+        <RelativePanel x:Name="TopBarPanel" Background="{ThemeResource ApplicationBarBackgroundThemeBrush}">
             <Button x:Name="BackBtn" 
                     Height="48" 
                     Width="48"             
@@ -84,10 +87,17 @@
                        RelativePanel.AlignHorizontalCenterWithPanel="True"  
                        RelativePanel.AlignVerticalCenterWithPanel="True"
                                    />
+            <TextBlock x:Name="PageTextBlock" 
+                                   FontSize="16" 
+                                   Margin="0,0,23,0" 
+                                   Text="{x:Bind CommentVM.PageIndex,Mode=OneWay}" 
+                                   RelativePanel.AlignVerticalCenterWithPanel="True"
+                                   RelativePanel.AlignRightWithPanel="True"
+                                   />
             <StackPanel x:Name="TopOperationBtn" Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True">
                 <Button x:Name="RefreshBtn" 
                         Height="48" 
-                        Width="60"  
+                        Width="70"  
                         FontFamily="Segoe MDL2 Assets" 
                         Content="&#xE149;" 
                         FontSize="24"         
@@ -95,7 +105,7 @@
                         Command="{x:Bind CommentVM.RefreshCommand,Mode=OneWay}"/>
                 <Button x:Name="GoTopBtn" 
                         Height="48" 
-                        Width="60"  
+                        Width="70"  
                         FontFamily="Segoe MDL2 Assets" 
                         Content="&#xE11C;" 
                         FontSize="24"        

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace Joke.Utils
@@ -106,6 +107,15 @@ namespace Joke.Utils
                 return false;
 
             return CP.IsWlanConnectionProfile || CP.IsWwanConnectionProfile;
+        }
+
+        public static void GoToPage(Type pageType, object parameter = null)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null)
+            {
+                rootFrame.Navigate(pageType, parameter);
+            }
         }
     }
 }

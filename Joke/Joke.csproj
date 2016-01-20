@@ -183,6 +183,7 @@
     <None Include="Joke_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\logo_path.png" />
     <Content Include="Assets\Images\anony.jpg" />
     <Content Include="Assets\Images\default.png" />
     <Content Include="Assets\Images\logo_word.png" />

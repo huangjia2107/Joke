@@ -24,6 +24,8 @@ namespace Joke.Utils
             {JokeAPI.Collection,         @"http://m2.qiushibaike.com/collect/list"},      //Get
 
             {JokeAPI.UserDetail,         @"http://nearby.qiushibaike.com/user/{0}/detail"},      //Get
+            {JokeAPI.UserPublish,        @"http://m2.qiushibaike.com//user/{0}/articles"},      //Get
+            {JokeAPI.UserParticipate,    @"http://m2.qiushibaike.com/user/{0}/participate"},      //Get
         };
 
         public static Dictionary<JokeAPI, string> JokeTitleMap = new Dictionary<JokeAPI, string>()
@@ -37,6 +39,8 @@ namespace Joke.Utils
             {JokeAPI.Publish,             "我发表的"},
             {JokeAPI.Participate,         "我参与的"},
             {JokeAPI.Collection,          "我收藏的"},
+            {JokeAPI.UserPublish,         "他(她)发表的"},
+            {JokeAPI.UserParticipate,     "他(她)发表的"},
         };
 
         public static Dictionary<RequestMethod, string> RequestMethodMap = new Dictionary<RequestMethod, string>()

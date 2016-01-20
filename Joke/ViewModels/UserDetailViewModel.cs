@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using Joke.Models;
 using Joke.Utils;
+using Joke.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,22 @@ namespace Joke.ViewModels
     public class UserDetailViewModel : ViewModelBase
     {
         private IAsyncAction m_workItem = null;
-        private UserDetailParam userDetailParam = null;
 
         public UserDetailViewModel()
         {
             _userDetail = new UserData();
+        }
+
+        private UserDetailParam _userDetailParam;
+        public UserDetailParam userDetailParam
+        {
+            get { return _userDetailParam; }
+            set
+            {
+                _userDetailParam = value;
+                if (value != null)
+                    IsMine = value.IsMine;
+            }
         }
 
         private UserData _userDetail;
@@ -31,7 +43,15 @@ namespace Joke.ViewModels
         {
             get { return _userDetail; }
             set { _userDetail = value; }
-        } 
+        }
+
+        private bool _IsMine;
+        public bool IsMine
+        {
+            get { return _IsMine; }
+            set { _IsMine = value; RaisePropertyChanged("IsMine"); }
+        }
+
 
         private bool _IsBusy;
         public bool IsBusy
@@ -58,6 +78,55 @@ namespace Joke.ViewModels
             }
         }
 
+        RelayCommand userPublishCommand { get; set; }
+        public ICommand UserPublishCommand
+        {
+            get
+            {
+                if (userPublishCommand == null)
+                    userPublishCommand = new RelayCommand(() =>
+                    {
+                        if (IsMine)
+                            return;
+
+                        /*
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
+                        {
+                            jokeAPI = JokeAPI.UserPublish,
+                            loginInfo = new User
+                        });
+                        */
+
+                    });
+
+                return userPublishCommand;
+            }
+        }
+
+        RelayCommand userParticipateCommand { get; set; }
+        public ICommand UserParticipateCommand
+        {
+            get
+            {
+                if (userParticipateCommand == null)
+                    userParticipateCommand = new RelayCommand(() =>
+                    {
+                        if (IsMine)
+                            return;
+
+                        /*
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
+                        {
+                            jokeAPI = JokeAPI.UserParticipate,
+                            loginInfo = UserLoginInfo
+                        });
+                        */
+                    });
+
+                return userParticipateCommand;
+            }
+        }
+
         #endregion
 
         #region Func
@@ -74,12 +143,13 @@ namespace Joke.ViewModels
         public void LoadUserDetailInfo(UserDetailParam param)
         {
             IsBusy = true;
+            userDetailParam = param;
+
             IAsyncAction asyncAction = ThreadPool.RunAsync(async (workItem) =>
             {
                 if (workItem.Status == AsyncStatus.Canceled)
                     return;
 
-                userDetailParam = param;
                 UserResponse userResponse = await JokeAPIUtils.GetObjResult<UserResponse>(new RequestParam
                 {
                     jokeAPI = param.jokeAPI,
