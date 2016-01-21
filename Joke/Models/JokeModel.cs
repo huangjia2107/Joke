@@ -170,11 +170,8 @@ namespace Joke.Models
                 if (commentCommand == null)
                     commentCommand = new RelayCommand(() =>
                     {
-                        Frame rootFrame = Window.Current.Content as Frame;
-                        if (rootFrame != null && OpenCommentEnabled)
-                        {
-                            rootFrame.Navigate(typeof(CommentPage), this);
-                        }
+                        if (OpenCommentEnabled)
+                            Algorithm.GoToPage(typeof(CommentPage), this);
                     });
 
                 return commentCommand;

@@ -29,7 +29,7 @@
                     <SolidColorBrush x:Key="AppBackgroundThemeBrush" Color="#FFEEEEF2"/>
                     
                     <SolidColorBrush x:Key="ListViewItemBackgroundThemeBrush" Color="White"/>
-                    <SolidColorBrush x:Key="ListBoxForegroundThemeBrush" Color="#FF303030"/>
+                    <SolidColorBrush x:Key="ListBoxForegroundThemeBrush" Color="#FF404040"/>
 
                     <SolidColorBrush x:Key="MsgToastBackgroundThemeBrush" Color="#0078D7"/>
 

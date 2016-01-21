@@ -89,14 +89,11 @@ namespace Joke.ViewModels
                         if (IsMine)
                             return;
 
-                        /*
-                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserJokeParam
                         {
                             jokeAPI = JokeAPI.UserPublish,
-                            loginInfo = new User
+                            user = userDetailParam.user,
                         });
-                        */
-
                     });
 
                 return userPublishCommand;
@@ -114,13 +111,11 @@ namespace Joke.ViewModels
                         if (IsMine)
                             return;
 
-                        /*
-                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserJokeParam
                         {
                             jokeAPI = JokeAPI.UserParticipate,
-                            loginInfo = UserLoginInfo
+                            user = userDetailParam.user,
                         });
-                        */
                     });
 
                 return userParticipateCommand;
@@ -153,7 +148,7 @@ namespace Joke.ViewModels
                 UserResponse userResponse = await JokeAPIUtils.GetObjResult<UserResponse>(new RequestParam
                 {
                     jokeAPI = param.jokeAPI,
-                    token = param.token,
+                    token = JokeAPIUtils.UserLoginInfo.token,
                     args = new string[] { param.user.id }
                 });
 

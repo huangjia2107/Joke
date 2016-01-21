@@ -13,6 +13,7 @@ namespace Joke.Utils
     public class JokeAPIUtils
     {
         public static string Usertoken { get; set; }
+        public static LoginInfo UserLoginInfo { get; set; }
 
         public async static Task<JokeResponse<T>> GetJokeInfoList<T>(RequestParam requestParam)
         {
@@ -97,6 +98,8 @@ namespace Joke.Utils
                     requestUrl = string.Format(HashMap.JokeAPIMap[requestParam.jokeAPI], requestParam.args);
                     break;
                 case JokeAPI.Comment:
+                case JokeAPI.UserPublish:
+                case JokeAPI.UserParticipate:
                     param = "page=" + requestParam.page + "&count=" + requestParam.count;
                     requestUrl = string.Format(HashMap.JokeAPIMap[requestParam.jokeAPI], requestParam.args) + "?" + param;
                     break;

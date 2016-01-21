@@ -24,11 +24,11 @@ namespace Joke.UserControls
     {
         JokeViewModel JokeVM { get; set; }
 
-        public JokePanelControl(JokeAPI jokeAPI, LoginInfo loginInfo = null)
+        public JokePanelControl(JokeAPI jokeAPI, User userInfo = null)
         {
             this.InitializeComponent();
 
-            JokeVM = new JokeViewModel(jokeAPI, loginInfo);
+            JokeVM = new JokeViewModel(jokeAPI, userInfo);
             this.DataContext = JokeVM;
         }
     }

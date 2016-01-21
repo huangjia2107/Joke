@@ -15,10 +15,10 @@ namespace Joke.ViewModels
 {
     public class JokeViewModel : ViewModelBase
     {
-        public JokeViewModel(JokeAPI jokeAPI, LoginInfo loginInfo = null)
+        public JokeViewModel(JokeAPI jokeAPI, User userInfo)
         {
             JokeAPI = jokeAPI;
-            UserLoginInfo = loginInfo;
+            UserInfo = userInfo;
 
             _PageIndex = 1;
             Title = HashMap.JokeTitleMap[jokeAPI];
@@ -28,7 +28,7 @@ namespace Joke.ViewModels
         #region Property
 
         public JokeAPI JokeAPI { get; set; }
-        public LoginInfo UserLoginInfo { get; set; }
+        public User UserInfo { get; set; }
 
         private bool _IsDisConnected;
         public bool IsDisConnected
@@ -88,7 +88,8 @@ namespace Joke.ViewModels
                        jokeAPI = jokeAPI,
                        page = pageIndex,
                        count = requestCount,
-                       token = UserLoginInfo != null ? UserLoginInfo.token : string.Empty
+                       token = JokeAPIUtils.UserLoginInfo.token,
+                       args = UserInfo == null ? null : new string[] { UserInfo.id }
                    });
                    IsBusy = false;
 
@@ -146,16 +147,11 @@ namespace Joke.ViewModels
                     refreshCommand = new RelayCommand(() =>
                     {
                         LoadJokeInfoCollection(JokeAPI);
-                    }, CanRefreshExecute);
+                    });
 
                 return refreshCommand;
             }
-        }
-
-        bool CanRefreshExecute()
-        {
-            return true;
-        }
+        }    
 
         RelayCommand<ListView> goTopCommand { get; set; }
         public ICommand GoTopCommand
@@ -174,16 +170,11 @@ namespace Joke.ViewModels
                                     listView.ScrollIntoView(joke);
                             }
                         }
-                    }, CanGoTopExecute);
+                    });
 
                 return goTopCommand;
             }
-        }
-
-        bool CanGoTopExecute(ListView listView)
-        {
-            return true;
-        }
+        }   
 
         #endregion    
     }

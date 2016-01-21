@@ -18,9 +18,9 @@ namespace Joke.Utils
 
         Signin, //登录
         Comment,//评论
-        Publish, //我的发表
-        Participate,  //我的参与
-        Collection,//我的收藏
+        MyPublish, //我的发表
+        MyParticipate,  //我的参与
+        MyCollection,//我的收藏
 
         UserDetail,
         UserPublish,
@@ -82,9 +82,14 @@ namespace Joke.Utils
 
     public class UserDetailParam
     {
-        public JokeAPI jokeAPI { get; set; }
-        public string token { get; set; }
+        public JokeAPI jokeAPI { get; set; }     
         public User user { get; set; } = new User();
         public bool IsMine { get; set; } = true;
+    }
+
+    public class UserJokeParam
+    {
+        public JokeAPI jokeAPI { get; set; }
+        public User user { get; set; }
     }
 }

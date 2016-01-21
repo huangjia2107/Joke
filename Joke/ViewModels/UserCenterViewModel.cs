@@ -41,7 +41,7 @@ namespace Joke.ViewModels
                 UserName = value.user.login;
                 UserPic = value.user.real_icon;
 
-                JokeAPIUtils.Usertoken = value.token;
+                JokeAPIUtils.UserLoginInfo = value;
 
                 if (value.err == 0)
                 {
@@ -136,16 +136,10 @@ namespace Joke.ViewModels
                                 //Some Error...
                             }
                         }
-
-                    }, CanLoginExecute);
+                    });
 
                 return loginBtnCommand;
             }
-        }
-
-        bool CanLoginExecute()
-        {
-            return true;
         }
 
         RelayCommand quitBtnCommand { get; set; }
@@ -176,8 +170,7 @@ namespace Joke.ViewModels
                         Algorithm.GoToPage(typeof(UserDetailPage), new UserDetailParam
                         {
                             jokeAPI = JokeAPI.UserDetail,
-                            user = UserLoginInfo.user,
-                            token = UserLoginInfo.token
+                            user = UserLoginInfo.user,    
                         });
                     });
 
@@ -193,11 +186,10 @@ namespace Joke.ViewModels
                 if (myPublishCommand == null)
                     myPublishCommand = new RelayCommand(() =>
                     {
-                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserJokeParam
                         {
-                            jokeAPI = JokeAPI.Publish,
-                            loginInfo = UserLoginInfo
-                        });
+                            jokeAPI= JokeAPI.MyPublish,
+                        } );
                     });
 
                 return myPublishCommand;
@@ -212,10 +204,9 @@ namespace Joke.ViewModels
                 if (myParticipateCommand == null)
                     myParticipateCommand = new RelayCommand(() =>
                     {
-                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserJokeParam
                         {
-                            jokeAPI = JokeAPI.Participate,
-                            loginInfo = UserLoginInfo
+                            jokeAPI = JokeAPI.MyParticipate,
                         });
                     });
 
@@ -231,10 +222,9 @@ namespace Joke.ViewModels
                 if (myCollectionCommand == null)
                     myCollectionCommand = new RelayCommand(() =>
                     {
-                        Algorithm.GoToPage(typeof(UserJokePage), new UserCenterParam
+                        Algorithm.GoToPage(typeof(UserJokePage), new UserJokeParam
                         {
-                            jokeAPI = JokeAPI.Collection,
-                            loginInfo = UserLoginInfo
+                            jokeAPI = JokeAPI.MyCollection,
                         });
                     });
 
@@ -246,7 +236,7 @@ namespace Joke.ViewModels
 
         #region Func
 
-         
+
 
         #endregion
     }

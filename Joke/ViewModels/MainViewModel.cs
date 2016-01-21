@@ -41,15 +41,15 @@ namespace Joke.ViewModels
 
                 //           if (workItem.Status == AsyncStatus.Canceled)
                 //               break;
-//                 if (Algorithm.IsNetworkValid() == false)
-//                     return;
+                //                 if (Algorithm.IsNetworkValid() == false)
+                //                     return;
 
-//                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-//                          new DispatchedHandler(() =>
-//                          {
-//                              IsBusy = true;
-//                              UserName = "正在登录...";
-//                          }));
+                //                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                //                          new DispatchedHandler(() =>
+                //                          {
+                //                              IsBusy = true;
+                //                              UserName = "正在登录...";
+                //                          }));
 
                 IReadOnlyList<PasswordCredential> pcList = FileHelper.RetrieveAllCredential();
                 if (pcList != null)
@@ -70,27 +70,32 @@ namespace Joke.ViewModels
                             }
                             else
                                 UserName = "请登录";
+
+                            IsBusy = false;
+                        }));
+                    }
+                    else
+                    {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
+                        new DispatchedHandler(() =>
+                        {
+                            UserName = "请登录";
+                            IsBusy = false;
                         }));
                     }
                 }
                 else
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
                          new DispatchedHandler(() =>
                          {
                              UserName = "请登录";
+                             IsBusy = false;
                          }));
                 }
             });
 
             m_workItem = asyncAction;
-            asyncAction.Completed = new AsyncActionCompletedHandler((IAsyncAction asyncInfo, AsyncStatus asyncStatus) =>
-            {
-//                 if (asyncStatus == AsyncStatus.Canceled)
-//                     return;  
-
-                IsBusy = false;
-            });
         }
 
         #region Property     
@@ -106,7 +111,7 @@ namespace Joke.ViewModels
                 UserName = value.user.login;
                 UserPic = value.user.real_icon;
 
-                JokeAPIUtils.Usertoken = value.token;
+                JokeAPIUtils.UserLoginInfo = value;
             }
         }
 
@@ -223,16 +228,10 @@ namespace Joke.ViewModels
                     {
                         if (splitView != null)
                             splitView.IsPaneOpen = !splitView.IsPaneOpen;
-
-                    }, CanMenuExecute);
+                    });
 
                 return menuBtnCommand;
             }
-        }
-
-        bool CanMenuExecute(SplitView splitView)
-        {
-            return true;
         }
 
         RelayCommand openUserCommand { get; set; }
@@ -243,20 +242,11 @@ namespace Joke.ViewModels
                 if (openUserCommand == null)
                     openUserCommand = new RelayCommand(() =>
                     {
-                        Frame rootFrame = Window.Current.Content as Frame;
-                        if (rootFrame != null)
-                        {
-                            rootFrame.Navigate(typeof(UserCenterPage), this.UserLoginInfo);
-                        }
-                    }, CanOpenUserExecute);
+                        Algorithm.GoToPage(typeof(UserCenterPage), this.UserLoginInfo);
+                    });
 
                 return openUserCommand;
             }
-        }
-
-        bool CanOpenUserExecute()
-        {
-            return !IsBusy;
         }
 
         #endregion

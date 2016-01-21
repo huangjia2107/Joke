@@ -33,8 +33,7 @@ namespace Joke.Models
                             rootFrame.Navigate(typeof(UserDetailPage), new UserDetailParam
                             {
                                 jokeAPI = JokeAPI.UserDetail,
-                                user = user,
-                                token = JokeAPIUtils.Usertoken,
+                                user = user,                               
                                 IsMine = false
                             });
                         }

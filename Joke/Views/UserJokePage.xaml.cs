@@ -31,8 +31,14 @@ namespace Joke.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            UserCenterParam param = e.Parameter as UserCenterParam;
-            rootGrid.Children.Insert(0, new JokePanelControl(param.jokeAPI, param.loginInfo));
+            UserJokeParam param = e.Parameter as UserJokeParam;
+            if (param != null)
+            {
+                if (rootGrid.Children.Count > 1)
+                    rootGrid.Children.RemoveAt(0);
+
+                rootGrid.Children.Insert(0, new JokePanelControl(param.jokeAPI, param.user));
+            }
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)

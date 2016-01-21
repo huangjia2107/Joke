@@ -142,8 +142,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="PublishBtn"     
-                            HorizontalContentAlignment="Stretch" 
-                            Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
+                            HorizontalContentAlignment="Stretch"                       
                             Padding="0,12"
                             Command="{x:Bind UserCenterVM.MyPublishCommand}">
                         <Grid>
@@ -163,8 +162,7 @@
                     <Path Grid.Column="1" Data="M20,14H4V10H20" Stretch="Fill" Width="1" Fill="Gray" Opacity="0.2"/>
                     <Button x:Name="CommentBtn" 
                             Grid.Column="2"
-                            HorizontalContentAlignment="Stretch" 
-                            Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
+                            HorizontalContentAlignment="Stretch"                       
                             Padding="0,12"
                             Command="{x:Bind UserCenterVM.MyParticipateCommand}">
                         <Grid>
@@ -184,8 +182,7 @@
                     <Path Grid.Column="3" Data="M20,14H4V10H20" Stretch="Fill" Width="1" Fill="Gray" Opacity="0.2"/>
                     <Button x:Name="CollectBtn" 
                             Grid.Column="4"
-                            HorizontalContentAlignment="Stretch" 
-                            Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
+                            HorizontalContentAlignment="Stretch"    
                             Padding="0,12"
                             Command="{x:Bind UserCenterVM.MyCollectionCommand}">
                         <Grid>
@@ -211,8 +208,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="SubmitBtn"     
-                            HorizontalContentAlignment="Stretch" 
-                            Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
+                            HorizontalContentAlignment="Stretch"                        
                             Padding="0,12">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -231,8 +227,7 @@
                     <Path Grid.Column="1" Data="M20,14H4V10H20" Stretch="Fill" Width="1" Fill="Gray" Opacity="0.2"/>
                     <Button x:Name="AuditBtn" 
                             Grid.Column="2"    
-                            HorizontalContentAlignment="Stretch" 
-                            Foreground="{ThemeResource TextBlockForegroundThemeBrush}"
+                            HorizontalContentAlignment="Stretch"                        
                             Padding="0,12">
                         <Grid>
                             <Grid.RowDefinitions>

@@ -19,12 +19,12 @@ namespace Joke.Utils
                                        
             {JokeAPI.Signin,             @"http://m2.qiushibaike.com/user/signin"},            //Post
             {JokeAPI.Comment,            @"http://m2.qiushibaike.com/article/{0}/comments"},   //Get
-            {JokeAPI.Publish,            @"http://m2.qiushibaike.com/user/my/articles"},      //Get
-            {JokeAPI.Participate,        @"http://m2.qiushibaike.com/user/my/participate"},  //Get
-            {JokeAPI.Collection,         @"http://m2.qiushibaike.com/collect/list"},      //Get
+            {JokeAPI.MyPublish,          @"http://m2.qiushibaike.com/user/my/articles"},      //Get
+            {JokeAPI.MyParticipate,      @"http://m2.qiushibaike.com/user/my/participate"},  //Get
+            {JokeAPI.MyCollection,       @"http://m2.qiushibaike.com/collect/list"},      //Get
 
             {JokeAPI.UserDetail,         @"http://nearby.qiushibaike.com/user/{0}/detail"},      //Get
-            {JokeAPI.UserPublish,        @"http://m2.qiushibaike.com//user/{0}/articles"},      //Get
+            {JokeAPI.UserPublish,        @"http://m2.qiushibaike.com/user/{0}/articles"},      //Get
             {JokeAPI.UserParticipate,    @"http://m2.qiushibaike.com/user/{0}/participate"},      //Get
         };
 
@@ -36,11 +36,11 @@ namespace Joke.Utils
             {JokeAPI.Text,                "文字"},
             {JokeAPI.Img,                 "图片"},
             {JokeAPI.Video,               "视频"},
-            {JokeAPI.Publish,             "我发表的"},
-            {JokeAPI.Participate,         "我参与的"},
-            {JokeAPI.Collection,          "我收藏的"},
+            {JokeAPI.MyPublish,           "我发表的"},
+            {JokeAPI.MyParticipate,       "我参与的"},
+            {JokeAPI.MyCollection,        "我收藏的"},
             {JokeAPI.UserPublish,         "他(她)发表的"},
-            {JokeAPI.UserParticipate,     "他(她)发表的"},
+            {JokeAPI.UserParticipate,     "他(她)参与的"},
         };
 
         public static Dictionary<RequestMethod, string> RequestMethodMap = new Dictionary<RequestMethod, string>()

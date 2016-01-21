@@ -17,7 +17,7 @@ namespace Joke.Models
         }
 
         public string emotion { get; set; }
-        public int qb_age { get; set; }   
+        public int qb_age { get; set; }
         public string location { get; set; }
         public int bg { get; set; }
         public string relationship { get; set; }
@@ -113,7 +113,22 @@ namespace Joke.Models
             get { return _gender; }
             set
             {
-                _gender = value == "M" ? "男" : value == "F" ? "女" : value;
+                switch(value)
+                {
+                    case "M":
+                        _gender = "男";
+                        break;
+                    case "F":
+                        _gender = "女";
+                        break;
+                    case "U":
+                        _gender = "未知";
+                        break;
+                    default:
+                        _gender = value;
+                        break;
+                }
+                                                    
                 RaisePropertyChanged("gender");
             }
         }

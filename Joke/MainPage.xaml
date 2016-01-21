@@ -15,6 +15,7 @@
     <Page.Resources>
         <utils:MenuItemToObjectConverter x:Key="MTOConverter"/>
         <utils:BoolToVisibilityConverter x:Key="BTVConverter"/>
+        <utils:BoolToNotboolConverter x:Key="BTNBConverter"/>
 
         <Storyboard x:Name="MsgVisibleStoryboard" FillBehavior="Stop" Duration="0:0:3" Completed="MsgVisibleStoryboard_Completed">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MsgToast">
@@ -108,6 +109,7 @@
                         <Button x:Name="MineBtn" 
                                 Height="48"         
                                 HorizontalContentAlignment="Stretch" 
+                                IsEnabled="{x:Bind MainVM.IsBusy,Mode=OneWay,Converter={StaticResource BTNBConverter}}"
                                 Command="{x:Bind MainVM.OpenUserCommand}"
                                 Padding="0">
                             <Grid>

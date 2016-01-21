@@ -94,16 +94,11 @@ namespace Joke.ViewModels
                         if (_CurrentJokeInfo != null)
                             RefreshJokeInfoCollection(_CurrentJokeInfo.id);
 
-                    }, CanRefreshExecute);
+                    });
 
                 return refreshCommand;
             }
-        }
-
-        bool CanRefreshExecute()
-        {
-            return true;
-        }
+        }    
 
         RelayCommand<ListView> goTopCommand { get; set; }
         public ICommand GoTopCommand
@@ -118,16 +113,11 @@ namespace Joke.ViewModels
                             if (listView.Items.Count > 0)
                                 listView.ScrollIntoView(listView.Items[0]);
                         }
-                    }, CanGoTopExecute);
+                    });
 
                 return goTopCommand;
             }
-        }
-
-        bool CanGoTopExecute(ListView listView)
-        {
-            return true;
-        }
+        }   
 
         #endregion
 
