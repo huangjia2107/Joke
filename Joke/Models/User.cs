@@ -13,7 +13,7 @@ namespace Joke.Models
     {
         public User()
         {
-            _login = "请登录";
+            _login = "登录";
             _real_icon = @"ms-Appx:///Assets/Images/void.png";
         }
 

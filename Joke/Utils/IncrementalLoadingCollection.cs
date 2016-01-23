@@ -100,40 +100,43 @@ namespace Joke.Utils
                 }
 
                 var response = await funcGetData(pageIndex, this.requestCount);
-                if (response == null)
+                if (response != null && response.err == 0)
+                {
+                    pageIndex++;
+                    _HasMoreItems = (response.items.Length != 0);
+
+                    if (_HasMoreItems)
+                    {
+                        this.AddItems(response.items.ToList<T>(), funcIsExist);
+                        responseCount += response.count;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine("   End load, Response Count : " + response.count + ", Real Count : " + response.items.Length);
+
+                    if (!_HasMoreItems)
+                    {
+                        System.Diagnostics.Debug.WriteLine("======== Response Total Count : " + responseCount + ", Real Total Count : " + this.Count + " ========");
+
+                        if (this.OnLoadStatusChanged != null)
+                            this.OnLoadStatusChanged(
+                                new LoadStatusArgs
+                                {
+                                    Status = LoadStatus.Finish,
+                                    ResponseTotalCount = (int)requestCount,
+                                    RealTotalCount = this.Count
+                                });
+                    }
+
+                    return new LoadMoreItemsResult { Count = response.items == null ? 0 : (uint)response.items.Length };
+                }
+                else
                 {
                     if (this.OnLoadStatusChanged != null)
                         this.OnLoadStatusChanged(new LoadStatusArgs { Status = LoadStatus.Empty });
 
+                    _HasMoreItems = false;
                     return new LoadMoreItemsResult { Count = 0 };
                 }
-
-                pageIndex++;
-                _HasMoreItems = (response.items.Length != 0);
-
-                if (_HasMoreItems)
-                {
-                    this.AddItems(response.items.ToList<T>(), funcIsExist);
-                    responseCount += response.count;
-                }
-
-                System.Diagnostics.Debug.WriteLine("   End load, Response Count : " + response.count + ", Real Count : " + response.items.Length);
-
-                if (!_HasMoreItems)
-                {
-                    System.Diagnostics.Debug.WriteLine("======== Response Total Count : " + responseCount + ", Real Total Count : " + this.Count + " ========");
-
-                    if (this.OnLoadStatusChanged != null)
-                        this.OnLoadStatusChanged(
-                            new LoadStatusArgs
-                            {
-                                Status = LoadStatus.Finish,
-                                ResponseTotalCount = (int)requestCount,
-                                RealTotalCount = this.Count
-                            });
-                }
-
-                return new LoadMoreItemsResult { Count = response.items == null ? 0 : (uint)response.items.Length };
             }
             catch (Exception ex)
             {

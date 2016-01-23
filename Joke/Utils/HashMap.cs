@@ -36,11 +36,11 @@ namespace Joke.Utils
             {JokeAPI.Text,                "文字"},
             {JokeAPI.Img,                 "图片"},
             {JokeAPI.Video,               "视频"},
-            {JokeAPI.MyPublish,           "我发表的"},
-            {JokeAPI.MyParticipate,       "我参与的"},
-            {JokeAPI.MyCollection,        "我收藏的"},
-            {JokeAPI.UserPublish,         "他(她)发表的"},
-            {JokeAPI.UserParticipate,     "他(她)参与的"},
+            {JokeAPI.MyPublish,           "发表"},
+            {JokeAPI.MyParticipate,       "参与"},
+            {JokeAPI.MyCollection,        "收藏"},
+            {JokeAPI.UserPublish,         "发表"},
+            {JokeAPI.UserParticipate,     "参与"},
         };
 
         public static Dictionary<RequestMethod, string> RequestMethodMap = new Dictionary<RequestMethod, string>()

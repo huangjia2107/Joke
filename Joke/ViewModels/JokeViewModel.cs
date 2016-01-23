@@ -112,14 +112,14 @@ namespace Joke.ViewModels
 
                     Messenger.Default.Send(
                         new PopupToastArgs { IsCancel = false, Msg = "未能获取到任何内容！" },
-                        MessageHelper.PopupToastToken);
+                        MessageHelper.PopupMainToastToken);
 
                     break;
                 case LoadStatus.Finish:
 
                     Messenger.Default.Send(
                         new PopupToastArgs { IsCancel = false, Msg = "全部内容已获取完毕！" },
-                        MessageHelper.PopupToastToken);
+                        MessageHelper.PopupMainToastToken);
 
                     break;
             }
@@ -131,7 +131,7 @@ namespace Joke.ViewModels
 
             Messenger.Default.Send(
                 new PopupToastArgs { IsCancel = !IsDisConnected, Msg = "当前网络异常！" },
-                MessageHelper.PopupToastToken);
+                MessageHelper.PopupMainToastToken);
         }
 
         #endregion

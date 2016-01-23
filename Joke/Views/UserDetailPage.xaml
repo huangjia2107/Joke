@@ -12,6 +12,17 @@
 
     <Page.Resources>
         <utils:BoolToVisibilityConverter x:Key="BTVConverter"/>
+
+        <Storyboard x:Name="MsgVisibleStoryboard" FillBehavior="Stop" Duration="0:0:3" Completed="MsgVisibleStoryboard_Completed">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MsgToast">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="MsgToast"/>
+        </Storyboard>
     </Page.Resources>
 
     <Grid Background="{ThemeResource AppBackgroundThemeBrush}">
@@ -65,7 +76,7 @@
                                 />
             <TextBlock x:Name="TitleTextBlock" 
                        FontSize="18"          
-                       Text="资料详情" 
+                       Text="资料" 
                        RelativePanel.AlignHorizontalCenterWithPanel="True"  
                        RelativePanel.AlignVerticalCenterWithPanel="True"
                                    />
@@ -123,7 +134,7 @@
                                 >
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE76E;" FontFamily="Segoe MDL2 Assets" FontSize="22" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                                <TextBlock Text="{x:Bind UserDetailVM.userDetail.smile_cnt,Mode=OneWay}" FontSize="20" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind UserDetailVM.userDetail.smile_cnt,Mode=OneWay}" FontSize="20" VerticalAlignment="Center" Foreground="{ThemeResource TextBlockForegroundThemeBrush}"/>
                             </StackPanel>
                         </Button>
                         <Path Grid.Column="2" Data="M20,14H4V10H20" Stretch="Fill" Width="1" Fill="Gray" Opacity="0.2"/>
@@ -135,11 +146,11 @@
                             <StackPanel Orientation="Horizontal">
                                 <Path Data="M199.67,199.45267 C201.22943,200.3263 201.57663,202.20603 208.11829,205.39361 215.0558,208.31027 219.3761,206.12772 220.60751,206.2082 225.62833,206.53632 226.37312,210.45818 226.46192,211.0987 226.73222,212.70816 226.48213,215.88819 223.42027,217.47362 220.34212,219.0675 213.6546,218.91124 212.23283,218.6611 210.545,222.5985 206.15193,233.69392 196.50352,242.61942 190.10767,248.53606 186.67226,250.77034 178.36325,253.88885 165.98262,258.53554 153.88705,257.32617&#xD;&#xA;150.67008,256.97414 138.67006,255.66095 127.50319,249.25372 127.1708,249.06694 112.54501,240.84839 107.26375,230.59844 107.56642,230.45261 106.00375,226.20267 108.08724,223.24437 109.46258,221.72356 110.8379,220.20275 116.38877,217.28613 121.25336,222.53605 126.29503,229.53596 129.79237,232.41838 137.26381,236.3067 140.58666,238.036 149.41999,242.61932 163.75333,241.11932 170.93914,240.36732 181.54499,236.036 187.42047,229.16096 189.10686,227.18766&#xD;&#xA;195.00333,220.11934 197.25333,212.99433 191.07625,208.50475 193.58906,210.31569 192.50333,209.45267 189.25333,206.86934 190.00333,202.61934 191.58666,200.45267 193.25333,198.36934 196.24253,197.53252 199.67,199.45267 z M202.00682,116.93884 C204.05408,116.96029 206.09312,117.76274 207.63872,119.34111 210.72991,122.49784 210.67673,127.56284 207.51993,130.65409 L193.7724,144.1162 206.89213,157.8577 C209.94313,161.0533 209.82586,166.11721 206.6302,169.16828 203.43454,172.21935 198.37062,172.10219 195.31962,168.90659 L177.59315,150.34003 177.34897,150.14678 C177.1413,149.97374 176.94038,149.78857 176.74718,149.59128 176.16759,148.99939 175.69853,148.34042 175.33976,147.63994 L175.31901,147.59683 175.31361,147.58774 C173.57286,144.47878 174.07765,140.47147 176.77399,137.89713 177.27331,137.42039 177.81824,137.02102 178.39398,136.69865 L178.57863,136.6012 196.32573,119.22256 C197.90413,117.67693 199.95958,116.91739 202.00682,116.93884 z M132.20865,103.56339 C136.56147,103.49071 140.00331,106.28637 140.00331,106.28637 140.00331,106.28637 145.41994,111.28599 143.58593,118.16134 143.16,119.75805 142.21125,121.17403 140.8992,122.99432 132.67003,134.41099 130.08669,160.95265 130.79501,162.34848 132.76401,166.22855 131.98252,169.74501 131.98252,169.97347 131.98252,171.02348 130.6196,175.80073 125.87812,178.14053 120.26359,180.91116 115.91988,178.41127 115.13866,177.9425 113.26368,176.97375 111.6442,175.27279&#xD;&#xA;110.33663,173.11958 108.45694,170.02431 107.88842,165.3863 107.82638,163.42682 107.42009,150.59866 111.08705,136.74445 111.4204,134.28685 111.42039,134.28685 114.7101,120.02245 121.2055,110.9545 125.08677,105.53601 127.05436,104.50257 130.29476,103.78666 130.94639,103.64269 131.58682,103.57377 132.20865,103.56339 z M190.08723,19.910027 C190.00102,19.867779 184.71223,80.327497 116.82373,79.485899 76.123831,78.981344 45.567206,113.98645 50.878551,156.57804 50.951249,157.161 51.569246,158.99963 51.513749,159.08288 51.482499,159.12975 46.259916,162.30261 46.003332,162.45267 -0.16333418,189.45267 5.5569763,283.38747 98.792071,293.32207 133.44465,297.01445 162.87303,300.8427 225.95248,294.79726 331.15815,284.71448 324.17,174.95267 270.32976,160.28193 270.10118,160.21965 270.17,159.95756&#xD;&#xA;270.17,159.95267 270.17,159.86934 271.81494,150.4572 271.83666,150.286 280.17,84.619334 211.50333,76.286 211.92,75.536 216.39923,67.473376 219.42,34.285998 190.08723,19.910027 z M184.20765,0.0012817383 C184.23739,-0.00048828125 184.25602,-0.00040435791 184.26246,0.001373291 224.29489,11.036377 237.00151,52.116859 231.59315,65.651745 L231.58696,65.66547 231.51311,65.644318 C231.32486,65.592724 233.95412,66.343418 233.95412,66.343418 284.48299,81.455137 294.70128,125.6525 289.42047,149.45267 289.37709,149.64816 290.19187,149.94102 291.00964,149.86845 340.83726,177.95267 350.29231,298.13539 232.08221,309.7159 162.19327,316.56261 129.58804,312.22694 91.194672,308.04518 -12.105331,296.79384 -22.829941,185.95256 34.817574,151.37543 L34.875854,151.35271 34.902107,151.53498 C34.990326,151.82111 35.201836,151.29762 34.971924,151.31525 L34.875854,151.35271 34.87088,151.31818 C32.336723,103.45244 66.126202,66.008404 111.17284,63.885464 166.33658,61.285721 169.29489,35.911346 176.00322,6.7856598 176.06441,6.5200424 176.91617,3.6198273 179.08655,1.8693924 180.82037,0.47104645 183.7618,0.027809143 184.20765,0.0012817383 z" 
                                       Stretch="Fill"
-                                      Fill="{ThemeResource TextBlockForegroundThemeBrush}"
                                       Height="22" Width="22" 
+                                      Fill="{ThemeResource ButtonForegroundThemeBrush}"
                                       VerticalAlignment="Center" 
                                       Margin="0,0,8,0"/>
-                                <TextBlock Text="{x:Bind UserDetailVM.userDetail.qs_cnt,Mode=OneWay}" FontSize="20" VerticalAlignment="Center"/>
+                                <TextBlock Text="{x:Bind UserDetailVM.userDetail.qs_cnt,Mode=OneWay}" FontSize="20" VerticalAlignment="Center" Foreground="{ThemeResource TextBlockForegroundThemeBrush}"/>
                             </StackPanel>
                         </Button>
                         <Path Grid.Column="4" Data="M20,14H4V10H20" Stretch="Fill" Width="1" Fill="Gray" Opacity="0.2"/>
@@ -280,5 +291,12 @@
                 <ProgressRing IsActive="{x:Bind UserDetailVM.IsBusy,Mode=OneWay}" Width="45" Height="45"/>
             </Border>
         </Grid>
+
+        <Border x:Name="MsgToast" Height="40" Grid.RowSpan="2" Visibility="Collapsed" VerticalAlignment="Top" Background="{ThemeResource MsgToastBackgroundThemeBrush}">
+            <Border.RenderTransform>
+                <CompositeTransform TranslateX="-120" x:Name="quitTransform"/>
+            </Border.RenderTransform>
+            <TextBlock x:Name="tipText" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+        </Border>
     </Grid>
 </Page>

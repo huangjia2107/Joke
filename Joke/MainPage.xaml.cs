@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using Joke.Data;
 using Joke.Models;
 using Joke.Utils;
@@ -28,33 +29,34 @@ namespace Joke
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        MainViewModel MainVM { get; set; } = new MainViewModel();
+        MainViewModel MainVM { get; set; }
         bool StoryBoardIsBusy = false;
 
         public MainPage()
         {
             this.InitializeComponent();
-            Messenger.Default.Register<PopupToastArgs>(this, MessageHelper.PopupToastToken, HandlePopupToastMessage);
+            DispatcherHelper.Initialize();
+
+            Messenger.Default.Register<PopupToastArgs>(this, MessageHelper.PopupMainToastToken, HandlePopupToastMessage);
             Messenger.Default.Register<UserStatusArgs>(this, MessageHelper.UserStatusToken, HandleUserStatusMessage);
 
+            MainVM = new MainViewModel();
             rootGrid.DataContext = MainVM;
         }
 
         private void HandlePopupToastMessage(PopupToastArgs args)
         {
+            if (StoryBoardIsBusy)
+            {
+                StoryBoardIsBusy = false;
+                MsgVisibleStoryboard.Stop();
+            }
+
             if (!args.IsCancel)
             {
                 StoryBoardIsBusy = true;
                 tipText.Text = args.Msg;
                 MsgVisibleStoryboard.Begin();
-            }
-            else
-            {
-                if (StoryBoardIsBusy)
-                {
-                    StoryBoardIsBusy = false;
-                    MsgVisibleStoryboard.Stop();
-                }
             }
         }
 
@@ -63,7 +65,7 @@ namespace Joke
             if (args == null)
                 return;
 
-            if(args.UserLoginInfo!=null)
+            if (args.UserLoginInfo != null)
                 MainVM.UserLoginInfo = args.UserLoginInfo;
         }
 
@@ -108,11 +110,6 @@ namespace Joke
 
         private void ThemeBtn_Click(object sender, RoutedEventArgs e)
         {
-            //                          if (this.RequestedTheme == ElementTheme.Light)
-            //                              this.RequestedTheme = ElementTheme.Dark;
-            //                          else
-            //                              this.RequestedTheme = ElementTheme.Light;
-
             (Application.Current.Resources["appSettings"] as AppSetting).IsDarkTheme = !(Application.Current.Resources["appSettings"] as AppSetting).IsDarkTheme;
         }
 

@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Threading;
 using Joke.Models;
 using Joke.Utils;
 using Joke.Views;
@@ -58,8 +59,7 @@ namespace Joke.ViewModels
                     LoginInfo resultInfo = await JokeAPIUtils.GetLoginInfo(pcList[0].UserName, pcList[0].Password);
                     if (resultInfo != null)
                     {
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
-                            new DispatchedHandler(() =>
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
                         {
                             if (resultInfo.err == 0)
                             {
@@ -69,29 +69,27 @@ namespace Joke.ViewModels
                                 UserLoginInfo = resultInfo;
                             }
                             else
-                                UserName = "请登录";
+                                UserName = "登录";
 
                             IsBusy = false;
-                        }));
+                        });
                     }
                     else
                     {
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
-                        new DispatchedHandler(() =>
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
                         {
-                            UserName = "请登录";
+                            UserName = "登录";
                             IsBusy = false;
-                        }));
+                        });
                     }
                 }
                 else
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
-                         new DispatchedHandler(() =>
-                         {
-                             UserName = "请登录";
-                             IsBusy = false;
-                         }));
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        UserName = "登录";
+                        IsBusy = false;
+                    });
                 }
             });
 

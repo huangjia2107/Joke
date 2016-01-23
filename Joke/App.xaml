@@ -31,7 +31,7 @@
                     <SolidColorBrush x:Key="ListViewItemBackgroundThemeBrush" Color="White"/>
                     <SolidColorBrush x:Key="ListBoxForegroundThemeBrush" Color="#FF404040"/>
 
-                    <SolidColorBrush x:Key="MsgToastBackgroundThemeBrush" Color="#0078D7"/>
+                    <SolidColorBrush x:Key="MsgToastBackgroundThemeBrush" Color="#FF9F13"/>
 
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
@@ -54,7 +54,7 @@
                     <SolidColorBrush x:Key="ListViewItemBackgroundThemeBrush" Color="#FF1A1A1A"/>
                     <SolidColorBrush x:Key="ListBoxForegroundThemeBrush" Color="#FF969696"/>
 
-                    <SolidColorBrush x:Key="MsgToastBackgroundThemeBrush" Color="#0078D7"/>
+                    <SolidColorBrush x:Key="MsgToastBackgroundThemeBrush" Color="#FF9F13"/>
                 </ResourceDictionary>
 
                 <ResourceDictionary x:Key="Default">
@@ -78,7 +78,7 @@
                     <SolidColorBrush x:Key="ListViewItemBackgroundThemeBrush" Color="#FF1A1A1A"/>
                     <SolidColorBrush x:Key="ListViewItemForegroundThemeBrush" Color="#FF969696"/>
 
-                    <SolidColorBrush x:Key="MsgToastBackgroundThemeBrush" Color="#0078D7"/>
+                    <SolidColorBrush x:Key="MsgToastBackgroundThemeBrush" Color="#FF9F13"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
             <ResourceDictionary.MergedDictionaries>

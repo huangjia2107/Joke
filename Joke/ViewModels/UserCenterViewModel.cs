@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using Joke.Models;
 using Joke.Utils;
 using Joke.Views;
@@ -10,6 +11,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation;
+using Windows.System.Threading;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -24,6 +29,8 @@ namespace Joke.ViewModels
             UserLoginInfo = new LoginInfo();
             _LoginGridVisibility = Visibility.Visible;
             _InfoGridVisibility = Visibility.Collapsed;
+
+            _LoginBtnText = "登录";
         }
 
         #endregion
@@ -40,6 +47,9 @@ namespace Joke.ViewModels
 
                 UserName = value.user.login;
                 UserPic = value.user.real_icon;
+
+                UserID = value.userid = string.Empty;
+                UserPassword = value.userpassword = string.Empty;
 
                 JokeAPIUtils.UserLoginInfo = value;
 
@@ -106,6 +116,20 @@ namespace Joke.ViewModels
             set { _UserPassword = value; RaisePropertyChanged("UserPassword"); }
         }
 
+        private string _LoginBtnText;
+        public string LoginBtnText
+        {
+            get { return _LoginBtnText; }
+            set { _LoginBtnText = value; RaisePropertyChanged("LoginBtnText"); }
+        }
+
+        private bool _IsBusy;
+        public bool IsBusy
+        {
+            get { return _IsBusy; }
+            set { _IsBusy = value; RaisePropertyChanged("IsBusy"); }
+        }
+
         #endregion
 
         #region Command
@@ -116,26 +140,12 @@ namespace Joke.ViewModels
             get
             {
                 if (loginBtnCommand == null)
-                    loginBtnCommand = new RelayCommand(async () =>
+                    loginBtnCommand = new RelayCommand(() =>
                     {
                         if (string.IsNullOrEmpty(_UserID) || string.IsNullOrEmpty(_UserPassword))
                             return;
 
-                        LoginInfo resultInfo = await JokeAPIUtils.GetLoginInfo(_UserID, _UserPassword);
-                        if (resultInfo != null)
-                        {
-                            if (resultInfo.err == 0)
-                            {
-                                resultInfo.userid = _UserID;
-                                resultInfo.userpassword = _UserPassword;
-
-                                UserLoginInfo = resultInfo;
-                            }
-                            else
-                            {
-                                //Some Error...
-                            }
-                        }
+                        DoLogin(_UserID, _UserPassword);
                     });
 
                 return loginBtnCommand;
@@ -152,7 +162,6 @@ namespace Joke.ViewModels
                     {
                         if (UserLoginInfo != null)
                             UserLoginInfo = new LoginInfo();
-
                     });
 
                 return quitBtnCommand;
@@ -170,7 +179,7 @@ namespace Joke.ViewModels
                         Algorithm.GoToPage(typeof(UserDetailPage), new UserDetailParam
                         {
                             jokeAPI = JokeAPI.UserDetail,
-                            user = UserLoginInfo.user,    
+                            user = UserLoginInfo.user,
                         });
                     });
 
@@ -188,8 +197,8 @@ namespace Joke.ViewModels
                     {
                         Algorithm.GoToPage(typeof(UserJokePage), new UserJokeParam
                         {
-                            jokeAPI= JokeAPI.MyPublish,
-                        } );
+                            jokeAPI = JokeAPI.MyPublish,
+                        });
                     });
 
                 return myPublishCommand;
@@ -236,7 +245,63 @@ namespace Joke.ViewModels
 
         #region Func
 
+        private void DoLogin(string username, string password)
+        {
+            IsBusy = true;
+            LoginBtnText = "正在登录...";
+            IAsyncAction asyncAction = ThreadPool.RunAsync(async (workItem) =>
+            {
+                if (!Algorithm.IsNetworkValid())
+                {
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            LoginBtnText = "登录";
+                            IsBusy = false;
+                            Messenger.Default.Send(
+                                       new PopupToastArgs { IsCancel = false, Msg = "网络异常,请重试." },
+                                       MessageHelper.PopupUserCenterToastToken);
+                        });
 
+                    return;
+                }
+
+                LoginInfo resultInfo = await JokeAPIUtils.GetLoginInfo(username, password);
+                if (resultInfo != null)
+                {
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        if (resultInfo.err == 0)
+                        {
+                            resultInfo.userid = username;
+                            resultInfo.userpassword = password;
+
+                            UserLoginInfo = resultInfo;
+                        }
+                        else
+                        {
+                            Messenger.Default.Send(
+                                new PopupToastArgs { IsCancel = false, Msg = "账号或密码错误." },
+                                MessageHelper.PopupUserCenterToastToken);
+                        }
+
+                        LoginBtnText = "登录";
+                        IsBusy = false;
+                    });
+                }
+                else
+                {
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        Messenger.Default.Send(
+                                   new PopupToastArgs { IsCancel = false, Msg = "登录失败,请重试." },
+                                   MessageHelper.PopupUserCenterToastToken);
+
+                        UserName = "登录";
+                        IsBusy = false;
+                    });
+                }
+            });
+        }
 
         #endregion
     }

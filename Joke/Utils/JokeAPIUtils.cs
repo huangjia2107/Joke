@@ -11,8 +11,7 @@ using Windows.Web.Http;
 namespace Joke.Utils
 {
     public class JokeAPIUtils
-    {
-        public static string Usertoken { get; set; }
+    {                                                  
         public static LoginInfo UserLoginInfo { get; set; }
 
         public async static Task<JokeResponse<T>> GetJokeInfoList<T>(RequestParam requestParam)

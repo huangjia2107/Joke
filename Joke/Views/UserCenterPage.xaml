@@ -3,11 +3,27 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Joke.Views"
+    xmlns:utils="using:Joke.Utils"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     RequestedTheme="{Binding Source={StaticResource appSettings},Converter={StaticResource BTTConverter}, Path=IsDarkTheme, Mode=OneWay}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <utils:BoolToNotboolConverter x:Key="BTNBConverter"/>
+
+        <Storyboard x:Name="MsgVisibleStoryboard" FillBehavior="Stop" Duration="0:0:3" Completed="MsgVisibleStoryboard_Completed">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MsgToast">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:0.2" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="MsgToast"/>
+        </Storyboard>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource AppBackgroundThemeBrush}">
         <!--
@@ -84,7 +100,6 @@
             </StackPanel>
             -->
         </RelativePanel>
-
         <Grid Grid.Row="1" x:Name="InfoGrid" Visibility="{x:Bind UserCenterVM.InfoGridVisibility,Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -250,7 +265,7 @@
                         Margin="10,35,10,0" 
                         Height="48" 
                         Content="注销" 
-                        Style="{StaticResource BgButtonStyle}" 
+                        Background="{ThemeResource ButtonBackgroundThemeBrush}"
                         Command="{x:Bind UserCenterVM.QuitBtnCommand,Mode=OneWay}"
                         />
             </Grid>
@@ -269,7 +284,6 @@
             </CommandBar>
             -->
         </Grid>
-
         <Grid Grid.Row="1" x:Name="LoginGrid" Visibility="{x:Bind UserCenterVM.LoginGridVisibility,Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -311,6 +325,7 @@
                                  PlaceholderText ="昵称或邮箱"
                                  VerticalAlignment="Center"
                                  Text="{x:Bind UserCenterVM.UserID,Mode=TwoWay}"
+                                 KeyUp="TextBox_KeyUp"
                                  />
                         <Path Grid.Row="1" Grid.Column="1" Data="M20,14H4V10H20" Stretch="Fill" Height="1" Fill="Gray" Opacity="0.5"/>
                         <TextBlock Grid.Column="0" 
@@ -331,6 +346,7 @@
                                      PlaceholderText ="密码"
                                      VerticalAlignment="Center"
                                      Password="{x:Bind UserCenterVM.UserPassword,Mode=TwoWay}"
+                                     KeyUp="TextBox_KeyUp"    
                                      />
                     </Grid>
                 </Border>
@@ -338,7 +354,13 @@
                     <CheckBox RelativePanel.AlignLeftWithPanel="true" Content="自动登录" FontSize="14" Visibility="Collapsed"/>
                     <HyperlinkButton RelativePanel.AlignRightWithPanel="True" Content="忘记密码？"  NavigateUri="http://www.qiushibaike.com/new4/fetchpass" FontSize="14" Foreground="#FF007ACC"/>
                 </RelativePanel>
-                <Button x:Name="LoginBtn" Grid.Row="2" Height="48" Content="登录" Style="{StaticResource BgButtonStyle}" Command="{x:Bind UserCenterVM.LoginBtnCommand,Mode=OneWay}"/>
+                <Button x:Name="LoginBtn" 
+                        Grid.Row="2" 
+                        Height="48" 
+                        Background="{ThemeResource ButtonBackgroundThemeBrush}"
+                        Content="{x:Bind UserCenterVM.LoginBtnText,Mode=OneWay}" 
+                        Command="{x:Bind UserCenterVM.LoginBtnCommand,Mode=OneWay}" 
+                        IsEnabled="{x:Bind UserCenterVM.IsBusy,Mode=OneWay,Converter={StaticResource BTNBConverter}}"/>
                 <TextBlock Grid.Row="3"
                            Text="一入糗百深似海  从此节操是路人"
                            FontSize="13"
@@ -348,5 +370,12 @@
                            />
             </Grid>
         </Grid>
+
+        <Border x:Name="MsgToast" Height="40" Grid.RowSpan="2" Visibility="Collapsed" VerticalAlignment="Top" Background="{ThemeResource MsgToastBackgroundThemeBrush}">
+            <Border.RenderTransform>
+                <CompositeTransform TranslateX="-120" x:Name="quitTransform"/>
+            </Border.RenderTransform>
+            <TextBlock x:Name="tipText" FontSize="16" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
+        </Border>
     </Grid>
 </Page>

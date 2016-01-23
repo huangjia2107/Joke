@@ -20,7 +20,10 @@ namespace Joke.Utils
 
     public class MessageHelper
     {
-        public static readonly string PopupToastToken = "PopupTost";
+        public static readonly string PopupMainToastToken = "PopupMainToast";
+        public static readonly string PopupUserCenterToastToken = "PopupUserCenterToast";
+        public static readonly string PopupUserDetailToastToken = "PopupUserDetailToast";
+
         public static readonly string UserStatusToken = "UserStatus";
     }
 }

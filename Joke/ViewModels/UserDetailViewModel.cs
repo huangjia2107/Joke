@@ -1,5 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using Joke.Models;
 using Joke.Utils;
 using Joke.Views;
@@ -52,7 +54,6 @@ namespace Joke.ViewModels
             set { _IsMine = value; RaisePropertyChanged("IsMine"); }
         }
 
-
         private bool _IsBusy;
         public bool IsBusy
         {
@@ -89,6 +90,14 @@ namespace Joke.ViewModels
                         if (IsMine)
                             return;
 
+                        if (string.IsNullOrEmpty(JokeAPIUtils.UserLoginInfo.token))
+                        {
+                            Messenger.Default.Send(
+                                       new PopupToastArgs { Msg = "登录后,即可查看." },
+                                       MessageHelper.PopupUserDetailToastToken);
+                            return;//需要登录
+                        }
+
                         Algorithm.GoToPage(typeof(UserJokePage), new UserJokeParam
                         {
                             jokeAPI = JokeAPI.UserPublish,
@@ -110,6 +119,14 @@ namespace Joke.ViewModels
                     {
                         if (IsMine)
                             return;
+
+                        if (string.IsNullOrEmpty(JokeAPIUtils.UserLoginInfo.token))
+                        {
+                            Messenger.Default.Send(
+                                       new PopupToastArgs { Msg = "登录后,即可查看." },
+                                       MessageHelper.PopupUserDetailToastToken);
+                            return;//需要登录
+                        }
 
                         Algorithm.GoToPage(typeof(UserJokePage), new UserJokeParam
                         {
@@ -145,6 +162,19 @@ namespace Joke.ViewModels
                 if (workItem.Status == AsyncStatus.Canceled)
                     return;
 
+                if (!Algorithm.IsNetworkValid())
+                {
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        IsBusy = false;
+                        Messenger.Default.Send(
+                                   new PopupToastArgs { Msg = "网络异常,请重试." },
+                                   MessageHelper.PopupUserDetailToastToken);
+                    });
+
+                    return;
+                }
+
                 UserResponse userResponse = await JokeAPIUtils.GetObjResult<UserResponse>(new RequestParam
                 {
                     jokeAPI = param.jokeAPI,
@@ -152,17 +182,23 @@ namespace Joke.ViewModels
                     args = new string[] { param.user.id }
                 });
 
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
-                            new DispatchedHandler(() =>
-                            {
-                                if (userResponse != null)
-                                {
-                                    if (userResponse.err == 0)
-                                        UpdateUserDetail(userResponse.userdata);
-                                }
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                {
+                    if (userResponse != null)
+                    {
+                        if (userResponse.err == 0)
+                        {
+                            UpdateUserDetail(userResponse.userdata);
+                            IsBusy = false;
 
-                                IsBusy = false;
-                            }));
+                            return;
+                        }
+                    }
+
+                    IsBusy = false;
+                    Messenger.Default.Send(new PopupToastArgs { Msg = "加载用户信息失败,请重试." },
+                                      MessageHelper.PopupUserDetailToastToken);
+                });
             });
 
             m_workItem = asyncAction;
@@ -187,7 +223,6 @@ namespace Joke.ViewModels
             userDetail.created_at = userData.created_at;
             userDetail.qs_cnt = userData.qs_cnt;
             userDetail.smile_cnt = userData.smile_cnt;
-
         }
 
         #endregion

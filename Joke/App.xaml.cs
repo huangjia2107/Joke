@@ -1,4 +1,5 @@
-﻿using Joke.Utils;
+﻿using GalaSoft.MvvmLight.Threading;
+using Joke.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -73,7 +74,7 @@ namespace Joke
 
             Algorithm.HideStatusBar();
             // 确保当前窗口处于活动状态
-            Window.Current.Activate();
+            Window.Current.Activate();     
         }
 
         /// <summary>
