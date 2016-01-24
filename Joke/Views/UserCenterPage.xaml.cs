@@ -75,7 +75,12 @@ namespace Joke.Views
 
             LoginInfo loginInfo = e.Parameter as LoginInfo;
             if (loginInfo != null)
+            {
+                if (loginInfo.err == -1)
+                    return;
+
                 UserCenterVM.UserLoginInfo = loginInfo;
+            }
         }
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)

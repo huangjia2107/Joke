@@ -48,9 +48,6 @@ namespace Joke.ViewModels
                 UserName = value.user.login;
                 UserPic = value.user.real_icon;
 
-                UserID = value.userid = string.Empty;
-                UserPassword = value.userpassword = string.Empty;
-
                 JokeAPIUtils.UserLoginInfo = value;
 
                 if (value.err == 0)
@@ -58,12 +55,18 @@ namespace Joke.ViewModels
                     LoginGridVisibility = Visibility.Collapsed;
                     InfoGridVisibility = Visibility.Visible;
 
+                    UserID = value.userid;
+                    UserPassword = value.userpassword;
+
                     FileHelper.SaveCredential(value.userid, value.userpassword);
                 }
                 else
                 {
                     InfoGridVisibility = Visibility.Collapsed;
                     LoginGridVisibility = Visibility.Visible;
+
+                    UserID = value.userid = string.Empty;
+                    UserPassword = value.userpassword = string.Empty;
 
                     FileHelper.RemoveCredential();
                 }

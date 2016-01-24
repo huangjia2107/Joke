@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <utils:BoolToNotboolConverter x:Key="BTNBConverter"/>
+        <utils:BoolToVisibilityConverter x:Key="BTVConverter"/>
 
         <Storyboard x:Name="MsgVisibleStoryboard" FillBehavior="Stop" Duration="0:0:3" Completed="MsgVisibleStoryboard_Completed">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="MsgToast">
@@ -191,7 +192,7 @@
                                    FontFamily="Segoe MDL2 Assets"
                                    Text="&#xE932;"
                                    FontSize="35"/>
-                            <TextBlock Grid.Row="1" Text="我评论的" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Row="1" Text="我参与的" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
                     <Path Grid.Column="3" Data="M20,14H4V10H20" Stretch="Fill" Width="1" Fill="Gray" Opacity="0.2"/>
@@ -368,6 +369,8 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            />
+
+                <Grid Grid.RowSpan="4" Background="#00000000" IsHitTestVisible="True" Visibility="{x:Bind UserCenterVM.IsBusy,Mode=OneWay,Converter={StaticResource BTVConverter}}"/>
             </Grid>
         </Grid>
 

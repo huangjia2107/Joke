@@ -69,6 +69,24 @@ namespace Joke
                 MainVM.UserLoginInfo = args.UserLoginInfo;
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            if (rootGridVSG.CurrentState != null)
+            {
+                switch (rootGridVSG.CurrentState.Name)
+                {
+                    case "WideState":
+                        break;
+                    case "MiddleState":
+                    case "NarrowState":
+                        MainSplitView.IsPaneOpen = false;
+                        break;
+                }
+            }
+        }
+
         private void MenuListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (rootGridVSG.CurrentState != null)

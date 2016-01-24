@@ -39,7 +39,7 @@ namespace Joke.Utils
             {JokeAPI.MyPublish,           "发表"},
             {JokeAPI.MyParticipate,       "参与"},
             {JokeAPI.MyCollection,        "收藏"},
-            {JokeAPI.UserPublish,         "发表"},
+            {JokeAPI.UserPublish,         "TA的糗事"},
             {JokeAPI.UserParticipate,     "参与"},
         };
 
